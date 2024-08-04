@@ -31,10 +31,6 @@ public class User {
 
     private String refreshToken;
 
-    public void updateEmail(String email) {
-        this.email = email;
-    }
-
     public void updateRefreshToken(String refreshToken) {
         this.refreshToken = refreshToken;
     }

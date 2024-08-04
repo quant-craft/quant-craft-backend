@@ -3,7 +3,8 @@ package com.quant.craft.backend.application.service;
 import com.quant.craft.backend.domain.auth.JwtTokenProvider;
 import com.quant.craft.backend.domain.auth.OAuthProvider;
 import com.quant.craft.backend.domain.User;
-import com.quant.craft.backend.infrastructure.client.KakaoOAuthClient;
+import com.quant.craft.backend.infrastructure.client.dto.UserDTO;
+import com.quant.craft.backend.infrastructure.client.kakao.KakaoOAuthClient;
 import com.quant.craft.backend.infrastructure.repository.UserRepository;
 import com.quant.craft.backend.presentation.dto.TokenResponse;
 import lombok.RequiredArgsConstructor;
@@ -30,12 +31,12 @@ public class AuthService {
     public TokenResponse oauthLogin(String provider, String authorizationCode) {
         return switch (OAuthProvider.from(provider)) {
             case KAKAO -> {
-                User userResponse = kakaoClient.buildUser(
+                UserDTO userDTO = kakaoClient.getUserInformation(
                         kakaoClient.generateAccessToken(authorizationCode)
                 );
 
-                User user = userRepository.findByOauthId(userResponse.getOauthId()).orElseGet(
-                        () -> userRepository.save(userResponse)
+                User user = userRepository.findByOauthId(userDTO.getOauthId()).orElseGet(
+                        () -> userRepository.save(userDTO.toEntity())
                 );
 
                 String accessToken = jwtTokenProvider.createAccessToken(user);
