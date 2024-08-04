@@ -29,7 +29,7 @@ dependencies {
 
     // db
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-    runtimeOnly("org.postgresql:postgresql")
+    implementation("org.postgresql:postgresql:42.7.3")
 
     // lombok
     compileOnly("org.projectlombok:lombok")
