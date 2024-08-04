@@ -47,4 +47,18 @@ public class AuthService {
             }
         };
     }
+
+    public TokenResponse refreshAccessTokenWithRefreshToken(String refreshToken) {
+        jwtTokenProvider.validateRefreshToken(refreshToken);
+
+        User user = userRepository.findByRefreshToken(refreshToken)
+                .orElseThrow(() -> {
+                    throw new RuntimeException("Not found User. refreshToken: " + refreshToken);
+                });
+
+        return new TokenResponse(
+                jwtTokenProvider.createAccessToken(user),
+                refreshToken
+        );
+    }
 }
