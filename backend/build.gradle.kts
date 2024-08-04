@@ -26,6 +26,8 @@ repositories {
 dependencies {
     // spring
     implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
+
 
     // db
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
