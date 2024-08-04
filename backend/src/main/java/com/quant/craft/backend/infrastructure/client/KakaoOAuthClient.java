@@ -1,6 +1,7 @@
 package com.quant.craft.backend.infrastructure.client;
 
 import com.quant.craft.backend.domain.User;
+import com.quant.craft.backend.domain.auth.OAuthProvider;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
@@ -35,7 +36,7 @@ public class KakaoOAuthClient {
         );
     }
 
-    public String requestAccessToken(String authorizationCode) {
+    public String generateAccessToken(String authorizationCode) {
         try {
             String url = String.format("%s/oauth/token", authServerUrl);
 
@@ -65,7 +66,7 @@ public class KakaoOAuthClient {
         return jsonObject.getString("access_token");
     }
 
-    public User requestUserInformation(String accessToken) {
+    public User buildUser(String accessToken) {
         try {
             String url = String.format("%s/user/me", apiServerUrl);
             String response = client.get()
@@ -90,7 +91,7 @@ public class KakaoOAuthClient {
         User user = User.builder()
                 .nickname(profile.getString("nickname"))
                 .oauthId(String.valueOf(jsonObject.getLong("id")))
-                .oauthProvider("KAKAO")
+                .oauthProvider(OAuthProvider.KAKAO)
                 .build();
 
         if (kakaoAccount.has("email")) {

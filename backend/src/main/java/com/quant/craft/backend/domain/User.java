@@ -1,8 +1,7 @@
 package com.quant.craft.backend.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.quant.craft.backend.domain.auth.OAuthProvider;
+import jakarta.persistence.*;
 import lombok.*;
 
 @AllArgsConstructor
@@ -14,19 +13,29 @@ import lombok.*;
 public class User {
 
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false)
+    private Long id;
 
+    @Column(nullable = false)
     private String nickname;
 
     private String email;
 
+    @Column(nullable = false)
     private String oauthId;
 
-    private String oauthProvider;
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private OAuthProvider oauthProvider;
 
     private String refreshToken;
 
     public void updateEmail(String email) {
         this.email = email;
+    }
+
+    public void updateRefreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
     }
 }

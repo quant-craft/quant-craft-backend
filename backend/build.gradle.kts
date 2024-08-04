@@ -40,6 +40,7 @@ dependencies {
 
     // jwt
     implementation("io.jsonwebtoken:jjwt:0.9.1")
+    implementation("javax.xml.bind:jaxb-api:2.2.4")
 
     // lombok
     compileOnly("org.projectlombok:lombok")

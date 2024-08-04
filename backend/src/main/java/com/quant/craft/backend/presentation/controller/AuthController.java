@@ -2,6 +2,7 @@ package com.quant.craft.backend.presentation.controller;
 
 import com.quant.craft.backend.application.service.AuthService;
 import com.quant.craft.backend.domain.User;
+import com.quant.craft.backend.presentation.dto.TokenResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -34,9 +35,8 @@ public class AuthController {
     }
 
     @GetMapping("/oauth/{provider}")
-    public ResponseEntity<User> login(@PathVariable("provider") String provider, @RequestParam("code") String code) {
-        User user = authService.oauthLogin(provider, code);
-        return ResponseEntity.ok(user);
+    public ResponseEntity<TokenResponse> login(@PathVariable("provider") String provider, @RequestParam("code") String code) {
+        return ResponseEntity.ok(authService.oauthLogin(provider, code));
     }
 
     @GetMapping("/")
