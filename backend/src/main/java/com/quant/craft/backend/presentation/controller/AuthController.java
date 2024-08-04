@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -28,13 +29,13 @@ public class AuthController {
                 provider
         );
 
-        String url = authService.getOAuthLoginUrl(redirectUrl);
+        String url = authService.getOAuthLoginUrl(provider, redirectUrl);
         return new RedirectView(url);
     }
 
-    @GetMapping("/oauth/kakao")
-    public ResponseEntity<User> redirectKaKao(@RequestParam("code") String code) {
-        User user = authService.kakaoOauthLogin(code);
+    @GetMapping("/oauth/{provider}")
+    public ResponseEntity<User> login(@PathVariable("provider") String provider, @RequestParam("code") String code) {
+        User user = authService.oauthLogin(provider, code);
         return ResponseEntity.ok(user);
     }
 
