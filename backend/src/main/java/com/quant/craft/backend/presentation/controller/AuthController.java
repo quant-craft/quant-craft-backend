@@ -1,8 +1,10 @@
 package com.quant.craft.backend.presentation.controller;
 
 import com.quant.craft.backend.application.service.AuthService;
+import com.quant.craft.backend.domain.User;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,9 +33,9 @@ public class AuthController {
     }
 
     @GetMapping("/oauth/kakao")
-    public String redirectKaKao(@RequestParam("code") String code) {
-        System.out.println("Authorization code: " + code);
-        return "redirect:/";
+    public ResponseEntity<User> redirectKaKao(@RequestParam("code") String code) {
+        User user = authService.kakaoOauthLogin(code);
+        return ResponseEntity.ok(user);
     }
 
     @GetMapping("/")

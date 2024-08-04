@@ -24,10 +24,11 @@ repositories {
 }
 
 dependencies {
+    implementation("org.json:json:20240303")
+
     // spring
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
-
 
     // db
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
@@ -36,6 +37,9 @@ dependencies {
     annotationProcessor("com.querydsl:querydsl-apt:5.0.0:jakarta")
     annotationProcessor("jakarta.annotation:jakarta.annotation-api")
     annotationProcessor("jakarta.persistence:jakarta.persistence-api")
+
+    // jwt
+    implementation("io.jsonwebtoken:jjwt:0.9.1")
 
     // lombok
     compileOnly("org.projectlombok:lombok")
