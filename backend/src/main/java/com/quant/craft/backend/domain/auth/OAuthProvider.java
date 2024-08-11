@@ -1,5 +1,7 @@
 package com.quant.craft.backend.domain.auth;
 
+import com.quant.craft.backend.exception.NotFoundException;
+
 import java.util.Arrays;
 
 public enum OAuthProvider {
@@ -9,6 +11,6 @@ public enum OAuthProvider {
         return Arrays.stream(values())
                 .filter(provider -> provider.name().equals(name.toUpperCase()))
                 .findFirst()
-                .orElseThrow(() -> new RuntimeException("Not Found Provider. provider: " + name));
+                .orElseThrow(() -> new NotFoundException("Not Found Provider. provider: " + name));
     }
 }

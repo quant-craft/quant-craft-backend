@@ -1,6 +1,7 @@
 package com.quant.craft.backend.infrastructure.client.kakao;
 
 import com.quant.craft.backend.domain.auth.OAuthProvider;
+import com.quant.craft.backend.exception.BadRequestException;
 import com.quant.craft.backend.infrastructure.client.dto.UserDTO;
 import com.quant.craft.backend.infrastructure.client.kakao.dto.KakaoUserResponse;
 import com.quant.craft.backend.infrastructure.client.kakao.dto.KakaoTokenResponse;
@@ -49,12 +50,12 @@ public class KakaoOAuthClient {
                     .body(KakaoTokenResponse.class);
 
             if (response == null) {
-                throw new RuntimeException("TokenResponse cannot be null!");
+                throw new BadRequestException("TokenResponse cannot be null!");
             }
 
             return response.getAccessToken();
         } catch (Exception e) {
-            throw new RuntimeException("Access Token Error. e: " + e);
+            throw new BadRequestException("Access Token Error. e: " + e);
         }
     }
 
@@ -79,7 +80,7 @@ public class KakaoOAuthClient {
                     .body(KakaoUserResponse.class);
 
             if (response == null) {
-                throw new RuntimeException("KakaoUserResponse cannot be null!");
+                throw new BadRequestException("KakaoUserResponse cannot be null!");
             }
 
             return UserDTO.builder()
@@ -88,7 +89,7 @@ public class KakaoOAuthClient {
                     .oauthProvider(OAuthProvider.KAKAO)
                     .build();
         } catch (Exception e) {
-            throw new RuntimeException("User Information Error. e: " + e);
+            throw new BadRequestException("User Information Error. e: " + e);
         }
     }
 }

@@ -3,6 +3,7 @@ package com.quant.craft.backend.application.service;
 import com.quant.craft.backend.domain.auth.JwtTokenProvider;
 import com.quant.craft.backend.domain.auth.OAuthProvider;
 import com.quant.craft.backend.domain.User;
+import com.quant.craft.backend.exception.NotFoundException;
 import com.quant.craft.backend.infrastructure.client.dto.UserDTO;
 import com.quant.craft.backend.infrastructure.client.kakao.KakaoOAuthClient;
 import com.quant.craft.backend.infrastructure.repository.UserRepository;
@@ -55,7 +56,7 @@ public class AuthService {
 
         User user = userRepository.findByRefreshToken(refreshToken)
                 .orElseThrow(() -> {
-                    throw new RuntimeException("Not found User. refreshToken: " + refreshToken);
+                    throw new NotFoundException("Not found User. refreshToken: " + refreshToken);
                 });
 
         return new TokenResponse(

@@ -1,6 +1,7 @@
 package com.quant.craft.backend.domain.auth;
 
 import com.quant.craft.backend.domain.User;
+import com.quant.craft.backend.exception.UnauthorizedException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
@@ -51,7 +52,7 @@ public class JwtTokenProvider {
         try {
             return Jwts.parser().setSigningKey(secretKeyOfAccessToken).parseClaimsJws(accessToken).getBody().getSubject();
         } catch (MalformedJwtException e) {
-            throw new RuntimeException("Invalid Access Token. e: " + e);
+            throw new UnauthorizedException("Invalid Access Token. e: " + e);
         }
     }
 
@@ -68,7 +69,7 @@ public class JwtTokenProvider {
         try {
             Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
         } catch (JwtException | IllegalArgumentException e) {
-            throw new RuntimeException("Invalid Token. e: " + e);
+            throw new UnauthorizedException("Invalid Token. e: " + e);
         }
     }
 }
