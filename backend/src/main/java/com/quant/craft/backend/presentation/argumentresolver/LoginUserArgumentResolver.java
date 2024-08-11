@@ -2,6 +2,7 @@ package com.quant.craft.backend.presentation.argumentresolver;
 
 import com.quant.craft.backend.application.service.AuthService;
 import com.quant.craft.backend.domain.User;
+import com.quant.craft.backend.exception.NotFoundException;
 import com.quant.craft.backend.exception.UnauthorizedException;
 import com.quant.craft.backend.presentation.interceptor.AuthorizationExtractor;
 import jakarta.servlet.http.HttpServletRequest;
@@ -39,7 +40,7 @@ public class LoginUserArgumentResolver implements HandlerMethodArgumentResolver 
 
         if (StringUtils.hasText(accessToken)) {
             Optional<User> user = authService.findUserByAccessToken(accessToken);
-            return user.orElseThrow(() -> new RuntimeException("User not found. access token: " + accessToken));
+            return user.orElseThrow(() -> new NotFoundException("User not found. access token: " + accessToken));
         }
         throw new UnauthorizedException("Invalid Access Token. access token: " + accessToken);
     }
