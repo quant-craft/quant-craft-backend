@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @RequiredArgsConstructor
 @Service
 public class AuthService {
@@ -60,5 +62,12 @@ public class AuthService {
                 jwtTokenProvider.createAccessToken(user),
                 refreshToken
         );
+    }
+
+    public Optional<User> findUserByAccessToken(String accessToken) {
+        jwtTokenProvider.validateAccessToken(accessToken);
+        String userId = jwtTokenProvider.getAccessTokenPayload(accessToken);
+
+        return userRepository.findById(Long.parseLong(userId));
     }
 }
