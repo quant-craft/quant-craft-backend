@@ -70,4 +70,10 @@ public class AuthService {
 
         return userRepository.findById(Long.parseLong(userId));
     }
+
+    @Transactional
+    public void logout(User user) {
+        user.updateRefreshToken(null);
+        userRepository.save(user);
+    }
 }

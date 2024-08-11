@@ -2,6 +2,7 @@ package com.quant.craft.backend.presentation.controller;
 
 import com.quant.craft.backend.application.service.AuthService;
 import com.quant.craft.backend.domain.User;
+import com.quant.craft.backend.presentation.argumentresolver.RequiredLogin;
 import com.quant.craft.backend.presentation.dto.AuthorizationCodeRequest;
 import com.quant.craft.backend.presentation.dto.RefreshTokenRequest;
 import com.quant.craft.backend.presentation.dto.TokenResponse;
@@ -31,6 +32,12 @@ public class AuthController {
     public ResponseEntity<TokenResponse> refreshToken(@RequestBody RefreshTokenRequest request) {
         TokenResponse tokenResponse = authService.refreshAccessTokenWithRefreshToken(request.getRefreshToken());
         return ResponseEntity.ok(tokenResponse);
+    }
+
+    @DeleteMapping("/api/logout")
+    public ResponseEntity<Void> logout(@RequiredLogin User user) {
+        authService.logout(user);
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/login/oauth/authorize")
