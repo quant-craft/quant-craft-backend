@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Login Callback</title>
+    <script th:inline="javascript">
+        document.addEventListener("DOMContentLoaded", async () => {
+            try {
+                const provider = [[${provider}]];
+                const code = [[${code}]];
+
+                const url = `/login/oauth/${provider}`;
+
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        code: code
+                    })
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.accessToken && data.refreshToken) {
+                        localStorage.setItem('accessToken', data.accessToken);
+                        localStorage.setItem('refreshToken', data.refreshToken);
+
+                        window.location.href = "/";
+
+                    } else {
+                        throw new Error('Tokens missing in response');
+                    }
+                } else {
+                    throw new Error('Login failed');
+                }
+            } catch (error) {
+                console.error('Error during login process:', error);
+
+                alert("로그인에 실패했습니다. 다시 시도해주세요.");
+                window.location.href = "/login";
+            }
+        });
+    </script>
+</head>
+<body>
+<h1>Login Callback</h1>
+<p>Processing your login...</p>
+</body>
+</html>
