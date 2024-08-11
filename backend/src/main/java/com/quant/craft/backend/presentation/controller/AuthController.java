@@ -19,6 +19,20 @@ public class AuthController {
 
     private final AuthService authService;
 
+    @PostMapping("/api/login/oauth/{provider}")
+    public ResponseEntity<TokenResponse> login(
+            @PathVariable("provider") String provider,
+            @RequestBody AuthorizationCodeRequest request
+    ) {
+        return ResponseEntity.ok(authService.oauthLogin(provider, request.getCode()));
+    }
+
+    @PostMapping("/api/login/refresh")
+    public ResponseEntity<TokenResponse> refreshToken(@RequestBody RefreshTokenRequest request) {
+        TokenResponse tokenResponse = authService.refreshAccessTokenWithRefreshToken(request.getRefreshToken());
+        return ResponseEntity.ok(tokenResponse);
+    }
+
     @GetMapping("/login/oauth/authorize")
     public RedirectView getAuthorizationCode(
             HttpServletRequest request,
@@ -33,20 +47,6 @@ public class AuthController {
 
         String url = authService.getOAuthLoginUrl(provider, redirectUrl);
         return new RedirectView(url);
-    }
-
-    @PostMapping("/login/oauth/{provider}")
-    public ResponseEntity<TokenResponse> login(
-            @PathVariable("provider") String provider,
-            @RequestBody AuthorizationCodeRequest request
-    ) {
-        return ResponseEntity.ok(authService.oauthLogin(provider, request.getCode()));
-    }
-
-    @PostMapping("/login/refresh")
-    public ResponseEntity<TokenResponse> refreshToken(@RequestBody RefreshTokenRequest request) {
-        TokenResponse tokenResponse = authService.refreshAccessTokenWithRefreshToken(request.getRefreshToken());
-        return ResponseEntity.ok(tokenResponse);
     }
 
     @GetMapping("/login/oauth/{provider}/callback")

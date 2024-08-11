@@ -6,13 +6,52 @@
     <title>Quant Craft - 홈</title>
     <link rel="stylesheet" href="css/styles.css">
 </head>
-<body>
 <div class="container">
     <h1>Quant Craft에 오신 것을 환영합니다!</h1>
     <p>최신 금융 데이터를 분석하고, 투자 전략을 최적화하세요.</p>
-    <a href="/dashboard" class="btn">대시보드로 이동</a>
-    <br>
-    <a href="/profile" class="btn profile-btn">내 정보 보기</a>
+
+    <div id="auth-area"></div>
 </div>
-</body>
+
+<script>
+    function checkAuth() {
+        const accessToken = localStorage.getItem('accessToken');
+        const authArea = document.getElementById('auth-area');
+
+        if (accessToken) {
+            authArea.innerHTML = `
+                <a href="/dashboard" class="btn">대시보드로 이동</a>
+                <br>
+                <a href="/profile" class="btn profile-btn">내 정보 보기</a>
+                <br>
+                <button id="logout-btn" class="btn">로그아웃</button>
+            `;
+
+            document.getElementById('logout-btn').addEventListener('click', async () => {
+                await fetch('/logout', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                localStorage.removeItem('accessToken');
+                localStorage.removeItem('refreshToken');
+            });
+
+        } else {
+            authArea.innerHTML = `
+                <button id="login-btn" class="btn">로그인</button>
+            `;
+
+            document.getElementById('login-btn').addEventListener('click', () => {
+                window.location.href = '/login';
+            });
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        checkAuth();
+    });
+</script>
 </html>
