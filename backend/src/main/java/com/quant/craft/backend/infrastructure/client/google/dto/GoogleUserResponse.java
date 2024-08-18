@@ -1,4 +1,4 @@
-package com.quant.craft.backend.infrastructure.client.kakao.dto;
+package com.quant.craft.backend.infrastructure.client.google.dto;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
@@ -10,7 +10,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Getter
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class KakaoTokenResponse {
+public class GoogleUserResponse {
 
-    private String accessToken;
+    private String id;
+    private String email;
+    private String name;
 }

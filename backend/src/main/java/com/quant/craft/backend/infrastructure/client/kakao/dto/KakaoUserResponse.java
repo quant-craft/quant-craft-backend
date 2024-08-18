@@ -11,7 +11,26 @@ import lombok.NoArgsConstructor;
 @Getter
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class KakaoUserResponse {
+
     private String id;
 
     private KakaoAccount kakaoAccount;
+
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Getter
+    @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
+    public static class KakaoAccount {
+
+        private KakaoProfile profile;
+
+        @NoArgsConstructor
+        @AllArgsConstructor
+        @Getter
+        @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
+        public static class KakaoProfile {
+
+            private String nickname;
+        }
+    }
 }

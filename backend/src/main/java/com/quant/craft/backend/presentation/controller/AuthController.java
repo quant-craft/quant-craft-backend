@@ -18,6 +18,8 @@ import org.springframework.web.servlet.view.RedirectView;
 @Controller
 public class AuthController {
 
+    public static final String REDIRECT_URL_FORMAT = "%s/login/oauth/%s/callback";
+
     private final AuthService authService;
 
     @PostMapping("/api/login/oauth/{provider}")
@@ -41,18 +43,8 @@ public class AuthController {
     }
 
     @GetMapping("/login/oauth/authorize")
-    public RedirectView getAuthorizationCode(
-            HttpServletRequest request,
-            @RequestParam("provider") String provider
-    ) {
-        String redirectUrl = String.format("%s://%s:%d/login/oauth/%s/callback",
-                request.getScheme(),
-                request.getServerName(),
-                request.getServerPort(),
-                provider
-        );
-
-        String url = authService.getOAuthLoginUrl(provider, redirectUrl);
+    public RedirectView getAuthorizationCode(@RequestParam("provider") String provider) {
+        String url = authService.getOAuthLoginUrl(provider);
         return new RedirectView(url);
     }
 
