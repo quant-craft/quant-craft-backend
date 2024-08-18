@@ -18,6 +18,8 @@ import org.springframework.web.servlet.view.RedirectView;
 @Controller
 public class AuthController {
 
+    public static final String REDIRECT_URL_FORMAT = "%s/login/oauth/%s/callback";
+
     private final AuthService authService;
 
     @PostMapping("/api/login/oauth/{provider}")

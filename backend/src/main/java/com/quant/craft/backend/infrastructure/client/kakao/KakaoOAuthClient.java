@@ -45,6 +45,7 @@ public class KakaoOAuthClient {
             String url = String.format("%s/oauth/token", authServerUrl);
             KakaoTokenResponse response = client.post()
                     .uri(url)
+                    .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_FORM_URLENCODED_VALUE)
                     .body(buildAccessTokenRequest(authorizationCode))
                     .retrieve()
                     .body(KakaoTokenResponse.class);
@@ -75,7 +76,6 @@ public class KakaoOAuthClient {
                     .uri(url)
                     .header(HttpHeaders.AUTHORIZATION, BEARER_PREFIX + accessToken)
                     .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-                    .header(HttpHeaders.ACCEPT_CHARSET, StandardCharsets.UTF_8.name())
                     .retrieve()
                     .body(KakaoUserResponse.class);
 

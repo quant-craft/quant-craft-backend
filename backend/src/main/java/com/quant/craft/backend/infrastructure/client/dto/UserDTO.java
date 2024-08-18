@@ -13,6 +13,8 @@ import lombok.NoArgsConstructor;
 @Getter
 public class UserDTO {
 
+    private String email;
+
     private String nickname;
 
     private String oauthId;
@@ -21,6 +23,7 @@ public class UserDTO {
 
     public User toEntity() {
         return User.builder()
+                .email(email)
                 .nickname(nickname)
                 .oauthId(oauthId)
                 .oauthProvider(oauthProvider)

@@ -5,6 +5,7 @@ import com.quant.craft.backend.domain.auth.OAuthProvider;
 import com.quant.craft.backend.domain.User;
 import com.quant.craft.backend.exception.NotFoundException;
 import com.quant.craft.backend.infrastructure.client.dto.UserDTO;
+import com.quant.craft.backend.infrastructure.client.google.GoogleOAuthClient;
 import com.quant.craft.backend.infrastructure.client.kakao.KakaoOAuthClient;
 import com.quant.craft.backend.infrastructure.repository.UserRepository;
 import com.quant.craft.backend.presentation.dto.TokenResponse;
@@ -21,12 +22,12 @@ public class AuthService {
     private final UserRepository userRepository;
     private final JwtTokenProvider jwtTokenProvider;
     private final KakaoOAuthClient kakaoClient;
+    private final GoogleOAuthClient googleClient;
 
     public String getOAuthLoginUrl(String provider, String redirectUrl) {
         return switch (OAuthProvider.from(provider)) {
-            case KAKAO -> {
-                yield kakaoClient.getOAuthLoginUrl(redirectUrl);
-            }
+            case KAKAO -> kakaoClient.getOAuthLoginUrl(redirectUrl);
+            case GOOGLE -> googleClient.getOAuthLoginUrl();
         };
     }
 
@@ -48,6 +49,21 @@ public class AuthService {
 
                 yield new TokenResponse(accessToken, refreshToken);
             }
+            case GOOGLE -> {
+                UserDTO userDTO = googleClient.getUserInformation(
+                        googleClient.generateAccessToken(authorizationCode)
+                );
+
+                User user = userRepository.findByOauthId(userDTO.getOauthId()).orElseGet(
+                        () -> userRepository.save(userDTO.toEntity())
+                );
+
+                String accessToken = jwtTokenProvider.createAccessToken(user);
+                String refreshToken = jwtTokenProvider.createRefreshToken(user);
+                user.updateRefreshToken(refreshToken);
+
+                yield new TokenResponse(accessToken, refreshToken);
+            }
         };
     }
 
@@ -55,9 +71,7 @@ public class AuthService {
         jwtTokenProvider.validateRefreshToken(refreshToken);
 
         User user = userRepository.findByRefreshToken(refreshToken)
-                .orElseThrow(() -> {
-                    throw new NotFoundException("Not found User. refreshToken: " + refreshToken);
-                });
+                .orElseThrow(() -> new NotFoundException("Not found User. refreshToken: " + refreshToken));
 
         return new TokenResponse(
                 jwtTokenProvider.createAccessToken(user),

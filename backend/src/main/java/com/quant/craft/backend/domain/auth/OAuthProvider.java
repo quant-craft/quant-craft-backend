@@ -5,7 +5,8 @@ import com.quant.craft.backend.exception.NotFoundException;
 import java.util.Arrays;
 
 public enum OAuthProvider {
-    KAKAO;
+    KAKAO,
+    GOOGLE;
 
     public static OAuthProvider from(String name) {
         return Arrays.stream(values())
