@@ -1,4 +1,4 @@
-package com.quant.craft.backend.infrastructure.configuration;
+package com.quant.craft.backend.presentation.configuration;
 
 import com.quant.craft.backend.presentation.interceptor.LoginInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;

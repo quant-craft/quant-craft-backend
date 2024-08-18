@@ -1,4 +1,4 @@
-package com.quant.craft.backend.infrastructure.configuration;
+package com.quant.craft.backend.presentation.configuration;
 
 import com.quant.craft.backend.application.service.AuthService;
 import com.quant.craft.backend.presentation.argumentresolver.LoginUserArgumentResolver;
