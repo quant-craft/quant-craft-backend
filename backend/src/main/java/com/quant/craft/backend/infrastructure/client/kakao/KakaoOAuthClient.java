@@ -2,10 +2,10 @@ package com.quant.craft.backend.infrastructure.client.kakao;
 
 import com.quant.craft.backend.domain.auth.OAuthProvider;
 import com.quant.craft.backend.exception.BadRequestException;
-import com.quant.craft.backend.infrastructure.client.dto.UserDTO;
+import com.quant.craft.backend.infrastructure.client.OAuthClient;
+import com.quant.craft.backend.infrastructure.client.dto.UserResponse;
 import com.quant.craft.backend.infrastructure.client.kakao.dto.KakaoUserResponse;
 import com.quant.craft.backend.infrastructure.client.kakao.dto.KakaoTokenResponse;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -14,32 +14,33 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClient;
 
-import java.nio.charset.StandardCharsets;
-
-@RequiredArgsConstructor
 @Component
-public class KakaoOAuthClient {
+public class KakaoOAuthClient extends OAuthClient {
 
-    private static final String BEARER_PREFIX = "Bearer ";
+    public KakaoOAuthClient(
+            RestClient client,
+            @Value("${application.host.backend}") String host,
+            @Value("${oauth.kakao.client-id}") String clientId,
+            @Value("${oauth.kakao.auth-server-url}") String authServerUrl,
+            @Value("${oauth.kakao.api-server-url}") String apiServerUrl
+    ) {
+        super(client, host, clientId, null, authServerUrl, apiServerUrl);
+    }
 
-    @Value("${oauth.kakao.client-id}")
-    private String clientId;
-
-    @Value("${oauth.kakao.auth-server-url}")
-    private String authServerUrl;
-
-    @Value("${oauth.kakao.api-server-url}")
-    private String apiServerUrl;
-
-    private final RestClient client;
-
-    public String getOAuthLoginUrl(String redirectUrl) {
+    @Override
+    public String getOAuthLoginUrl() {
         return String.format(
                 "%s/oauth/authorize?response_type=code&client_id=%s&redirect_uri=%s",
-                authServerUrl, clientId, redirectUrl
+                authServerUrl, clientId, buildRedirectUrl()
         );
     }
 
+    @Override
+    public OAuthProvider getOAuthProvider() {
+        return OAuthProvider.KAKAO;
+    }
+
+    @Override
     public String generateAccessToken(String authorizationCode) {
         try {
             String url = String.format("%s/oauth/token", authServerUrl);
@@ -69,12 +70,13 @@ public class KakaoOAuthClient {
         return requestBody;
     }
 
-    public UserDTO getUserInformation(String accessToken) {
+    @Override
+    public UserResponse getUserResponse(String accessToken) {
         try {
             String url = String.format("%s/user/me", apiServerUrl);
             KakaoUserResponse response = client.get()
                     .uri(url)
-                    .header(HttpHeaders.AUTHORIZATION, BEARER_PREFIX + accessToken)
+                    .header(HttpHeaders.AUTHORIZATION, OAuthClient.BEARER_PREFIX + accessToken)
                     .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_FORM_URLENCODED_VALUE)
                     .retrieve()
                     .body(KakaoUserResponse.class);
@@ -83,7 +85,7 @@ public class KakaoOAuthClient {
                 throw new BadRequestException("KakaoUserResponse cannot be null!");
             }
 
-            return UserDTO.builder()
+            return UserResponse.builder()
                     .nickname(response.getKakaoAccount().getProfile().getNickname())
                     .oauthId(response.getId())
                     .oauthProvider(OAuthProvider.KAKAO)

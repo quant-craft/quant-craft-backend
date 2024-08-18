@@ -1,12 +1,11 @@
 package com.quant.craft.backend.application.service;
 
 import com.quant.craft.backend.domain.auth.JwtTokenProvider;
-import com.quant.craft.backend.domain.auth.OAuthProvider;
 import com.quant.craft.backend.domain.User;
 import com.quant.craft.backend.exception.NotFoundException;
-import com.quant.craft.backend.infrastructure.client.dto.UserDTO;
-import com.quant.craft.backend.infrastructure.client.google.GoogleOAuthClient;
-import com.quant.craft.backend.infrastructure.client.kakao.KakaoOAuthClient;
+import com.quant.craft.backend.infrastructure.client.OAuthClient;
+import com.quant.craft.backend.infrastructure.client.OAuthClientFactory;
+import com.quant.craft.backend.infrastructure.client.dto.UserResponse;
 import com.quant.craft.backend.infrastructure.repository.UserRepository;
 import com.quant.craft.backend.presentation.dto.TokenResponse;
 import lombok.RequiredArgsConstructor;
@@ -21,50 +20,29 @@ public class AuthService {
 
     private final UserRepository userRepository;
     private final JwtTokenProvider jwtTokenProvider;
-    private final KakaoOAuthClient kakaoClient;
-    private final GoogleOAuthClient googleClient;
+    private final OAuthClientFactory oAuthClientFactory;
 
-    public String getOAuthLoginUrl(String provider, String redirectUrl) {
-        return switch (OAuthProvider.from(provider)) {
-            case KAKAO -> kakaoClient.getOAuthLoginUrl(redirectUrl);
-            case GOOGLE -> googleClient.getOAuthLoginUrl();
-        };
+    public String getOAuthLoginUrl(String provider) {
+        return oAuthClientFactory.get(provider).getOAuthLoginUrl();
     }
 
     @Transactional
     public TokenResponse oauthLogin(String provider, String authorizationCode) {
-        return switch (OAuthProvider.from(provider)) {
-            case KAKAO -> {
-                UserDTO userDTO = kakaoClient.getUserInformation(
-                        kakaoClient.generateAccessToken(authorizationCode)
-                );
+        OAuthClient oAuthClient = oAuthClientFactory.get(provider);
 
-                User user = userRepository.findByOauthId(userDTO.getOauthId()).orElseGet(
-                        () -> userRepository.save(userDTO.toEntity())
-                );
+        UserResponse userResponse = oAuthClient.getUserResponse(
+                oAuthClient.generateAccessToken(authorizationCode)
+        );
 
-                String accessToken = jwtTokenProvider.createAccessToken(user);
-                String refreshToken = jwtTokenProvider.createRefreshToken(user);
-                user.updateRefreshToken(refreshToken);
+        User user = userRepository.findByOauthId(userResponse.getOauthId()).orElseGet(
+                () -> userRepository.save(userResponse.toEntity())
+        );
 
-                yield new TokenResponse(accessToken, refreshToken);
-            }
-            case GOOGLE -> {
-                UserDTO userDTO = googleClient.getUserInformation(
-                        googleClient.generateAccessToken(authorizationCode)
-                );
+        String accessToken = jwtTokenProvider.createAccessToken(user);
+        String refreshToken = jwtTokenProvider.createRefreshToken(user);
+        user.updateRefreshToken(refreshToken);
 
-                User user = userRepository.findByOauthId(userDTO.getOauthId()).orElseGet(
-                        () -> userRepository.save(userDTO.toEntity())
-                );
-
-                String accessToken = jwtTokenProvider.createAccessToken(user);
-                String refreshToken = jwtTokenProvider.createRefreshToken(user);
-                user.updateRefreshToken(refreshToken);
-
-                yield new TokenResponse(accessToken, refreshToken);
-            }
-        };
+        return new TokenResponse(accessToken, refreshToken);
     }
 
     public TokenResponse refreshAccessTokenWithRefreshToken(String refreshToken) {
