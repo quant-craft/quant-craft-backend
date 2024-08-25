@@ -19,12 +19,6 @@ import java.util.stream.Collectors;
 @Component
 public class GoogleOAuthClient extends OAuthClient {
 
-    private static final String GET_AUTHORIZATION_CODE_URL = "https://accounts.google.com/o/oauth2/v2/auth";
-    private static final List<String> SCOPES = List.of(
-            "https://www.googleapis.com/auth/userinfo.profile",
-            "https://www.googleapis.com/auth/userinfo.email"
-    );
-
     public GoogleOAuthClient(
             RestClient client,
             @Value("${application.host.backend}") String host,
@@ -37,25 +31,12 @@ public class GoogleOAuthClient extends OAuthClient {
     }
 
     @Override
-    public OAuthProvider getOAuthProvider() {
-        return OAuthProvider.GOOGLE;
-    }
-
-    @Override
-    public String getOAuthLoginUrl() {
-        return String.format(
-                "%s?client_id=%s&redirect_uri=%s&response_type=code&scope=%s",
-                GET_AUTHORIZATION_CODE_URL, clientId, buildRedirectUrl(), String.join(" ", SCOPES)
-        );
-    }
-
-    @Override
-    public String generateAccessToken(String authorizationCode) {
+    public String generateAccessToken(String authorizationCode, String redirectUri) {
         try {
             String url = String.format("%s/token", authServerUrl);
             GoogleTokenResponse response = client.post()
                     .uri(url)
-                    .body(buildAccessTokenRequest(authorizationCode, buildRedirectUrl()))
+                    .body(buildAccessTokenRequest(authorizationCode, redirectUri))
                     .retrieve()
                     .body(GoogleTokenResponse.class);
 

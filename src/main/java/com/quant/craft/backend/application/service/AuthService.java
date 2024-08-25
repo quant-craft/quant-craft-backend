@@ -7,6 +7,7 @@ import com.quant.craft.backend.infrastructure.client.OAuthClient;
 import com.quant.craft.backend.infrastructure.client.OAuthClientFactory;
 import com.quant.craft.backend.infrastructure.client.dto.UserResponse;
 import com.quant.craft.backend.infrastructure.repository.UserRepository;
+import com.quant.craft.backend.presentation.dto.AuthorizationCodeRequest;
 import com.quant.craft.backend.presentation.dto.TokenResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,16 +23,12 @@ public class AuthService {
     private final JwtTokenProvider jwtTokenProvider;
     private final OAuthClientFactory oAuthClientFactory;
 
-    public String getOAuthLoginUrl(String provider) {
-        return oAuthClientFactory.get(provider).getOAuthLoginUrl();
-    }
-
     @Transactional
-    public TokenResponse oauthLogin(String provider, String authorizationCode) {
+    public TokenResponse oauthLogin(String provider, AuthorizationCodeRequest request) {
         OAuthClient oAuthClient = oAuthClientFactory.get(provider);
 
         UserResponse userResponse = oAuthClient.getUserResponse(
-                oAuthClient.generateAccessToken(authorizationCode)
+                oAuthClient.generateAccessToken(request.getCode(), request.getRedirectUri())
         );
 
         User user = userRepository.findByOauthId(userResponse.getOauthId()).orElseGet(

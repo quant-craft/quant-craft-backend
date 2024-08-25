@@ -10,4 +10,5 @@ import lombok.NoArgsConstructor;
 public class AuthorizationCodeRequest {
 
     private String code;
+    private String redirectUri;
 }
