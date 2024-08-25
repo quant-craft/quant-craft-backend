@@ -4,6 +4,7 @@ import com.quant.craft.backend.application.service.AuthService;
 import com.quant.craft.backend.exception.UnauthorizedException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -19,6 +20,10 @@ public class LoginInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
+        if (HttpMethod.OPTIONS.matches(request.getMethod())) {
+            return true;
+        }
+
         String accessToken = AuthorizationExtractor.extract(request);
 
         if (StringUtils.hasText(accessToken) && authService.findUserByAccessToken(accessToken).isPresent()) {
