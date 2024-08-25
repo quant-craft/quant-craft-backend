@@ -23,14 +23,8 @@ public abstract class OAuthClient {
 
     protected final String apiServerUrl;
 
-    public abstract OAuthProvider getOAuthProvider();
-    public abstract String getOAuthLoginUrl();
-
-    public abstract String generateAccessToken(String authorizationCode);
+    public abstract String generateAccessToken(String authorizationCode, String redirectUri);
 
     public abstract UserResponse getUserResponse(String accessToken);
 
-    protected String buildRedirectUrl() {
-        return String.format(AuthController.REDIRECT_URL_FORMAT, host, getOAuthProvider().name().toLowerCase());
-    }
 }

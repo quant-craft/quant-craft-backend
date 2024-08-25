@@ -28,20 +28,7 @@ public class KakaoOAuthClient extends OAuthClient {
     }
 
     @Override
-    public String getOAuthLoginUrl() {
-        return String.format(
-                "%s/oauth/authorize?response_type=code&client_id=%s&redirect_uri=%s",
-                authServerUrl, clientId, buildRedirectUrl()
-        );
-    }
-
-    @Override
-    public OAuthProvider getOAuthProvider() {
-        return OAuthProvider.KAKAO;
-    }
-
-    @Override
-    public String generateAccessToken(String authorizationCode) {
+    public String generateAccessToken(String authorizationCode, String redirectUri) {
         try {
             String url = String.format("%s/oauth/token", authServerUrl);
             KakaoTokenResponse response = client.post()
