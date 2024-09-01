@@ -35,6 +35,10 @@ public class User {
 
     private String refreshToken;
 
+    public void updatePoint(Long point) {
+        this.point = point;
+    }
+
     public void updateRefreshToken(String refreshToken) {
         this.refreshToken = refreshToken;
     }

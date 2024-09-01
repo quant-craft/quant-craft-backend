@@ -1,6 +1,6 @@
 package com.quant.craft.backend.domain.payment;
 
-public enum PaymentStatus {
+public enum PaymentTxnStatus {
 
     DONE,
     CANCELED;

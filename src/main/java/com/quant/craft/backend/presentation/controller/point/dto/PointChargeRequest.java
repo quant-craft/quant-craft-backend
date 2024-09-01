@@ -1,4 +1,4 @@
-package com.quant.craft.backend.presentation.controller.payment.dto;
+package com.quant.craft.backend.presentation.controller.point.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,11 +7,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-public class PaymentConfirmRequest {
+public class PointChargeRequest {
 
     private String paymentKey;
 
     private Long amount;
-
-    private String orderId;
 }

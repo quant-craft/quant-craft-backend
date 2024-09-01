@@ -1,5 +1,6 @@
 package com.quant.craft.backend.domain.payment;
 
+import com.quant.craft.backend.domain.point.PointTxn;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -10,8 +11,8 @@ import java.math.BigDecimal;
 @Builder
 @Getter
 @Entity
-@Table(name = "payments")
-public class Payment {
+@Table(name = "payment_txns")
+public class PaymentTxn {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,6 +28,11 @@ public class Payment {
     @Column(nullable = false)
     private String paymentKey;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private PaymentStatus status;
+    private PaymentTxnStatus status;
+
+    @OneToOne
+    @JoinColumn(name = "point_txn_id", nullable = false)
+    private PointTxn pointTxn;
 }
