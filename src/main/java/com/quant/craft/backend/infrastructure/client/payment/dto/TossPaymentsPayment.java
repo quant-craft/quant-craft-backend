@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.time.Instant;
 import java.time.LocalDateTime;
 
 @NoArgsConstructor
@@ -19,10 +20,10 @@ public class TossPaymentsPayment {
 
     private BigDecimal totalAmount;
 
-    private TossPaymentsPaymentStatus tossPaymentsPaymentStatus;
+    private TossPaymentsPaymentStatus status;
 
     @Nullable
-    private LocalDateTime approvedAt;
+    private Instant approvedAt;
 
     @Nullable
     private TossPaymentsFailure failure;

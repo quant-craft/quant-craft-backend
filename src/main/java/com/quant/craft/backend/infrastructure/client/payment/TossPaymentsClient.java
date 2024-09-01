@@ -41,8 +41,8 @@ public class TossPaymentsClient {
                 throw new BadRequestException("PaymentResponse cannot be null!");
             }
 
-            if (response.getTossPaymentsPaymentStatus() != TossPaymentsPayment.TossPaymentsPaymentStatus.DONE) {
-                throw new BadRequestException("Confirm Payment Error. status: " + response.getTossPaymentsPaymentStatus());
+            if (response.getStatus() != TossPaymentsPayment.TossPaymentsPaymentStatus.DONE) {
+                throw new BadRequestException("Confirm Payment Error. status: " + response.getStatus());
             }
 
             Optional.ofNullable(response.getFailure()).ifPresent(failure -> {

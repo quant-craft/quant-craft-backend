@@ -16,7 +16,7 @@ public class PointController {
     private final PointService service;
 
     @PostMapping("/charge")
-    public ResponseEntity<Void> charge(@RequiredLogin User user, @ModelAttribute PointChargeRequest request) {
+    public ResponseEntity<Void> charge(@RequiredLogin User user, @RequestBody PointChargeRequest request) {
         service.charge(user, request);
         return ResponseEntity.ok().build();
     }
