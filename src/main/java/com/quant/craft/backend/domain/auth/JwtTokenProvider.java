@@ -1,6 +1,6 @@
 package com.quant.craft.backend.domain.auth;
 
-import com.quant.craft.backend.domain.User;
+import com.quant.craft.backend.domain.user.User;
 import com.quant.craft.backend.exception.UnauthorizedException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;

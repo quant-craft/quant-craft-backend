@@ -1,4 +1,4 @@
-package com.quant.craft.backend.presentation.dto.payment;
+package com.quant.craft.backend.infrastructure.client.payment.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-public class PaymentConfirmRequest {
+public class TossPaymentsConfirmRequest {
 
     private String paymentKey;
 

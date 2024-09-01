@@ -1,9 +1,9 @@
 package com.quant.craft.backend.application.service;
 
-import com.quant.craft.backend.domain.User;
+import com.quant.craft.backend.domain.user.User;
 import com.quant.craft.backend.exception.NotFoundException;
 import com.quant.craft.backend.infrastructure.repository.UserRepository;
-import com.quant.craft.backend.presentation.dto.user.UserResponse;
+import com.quant.craft.backend.presentation.controller.dto.user.UserResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

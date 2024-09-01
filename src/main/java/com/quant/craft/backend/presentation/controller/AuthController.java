@@ -1,11 +1,11 @@
 package com.quant.craft.backend.presentation.controller;
 
 import com.quant.craft.backend.application.service.AuthService;
-import com.quant.craft.backend.domain.User;
+import com.quant.craft.backend.domain.user.User;
 import com.quant.craft.backend.presentation.argumentresolver.RequiredLogin;
-import com.quant.craft.backend.presentation.dto.auth.AuthorizationCodeRequest;
-import com.quant.craft.backend.presentation.dto.auth.RefreshTokenRequest;
-import com.quant.craft.backend.presentation.dto.auth.TokenResponse;
+import com.quant.craft.backend.presentation.controller.dto.auth.AuthorizationCodeRequest;
+import com.quant.craft.backend.presentation.controller.dto.auth.RefreshTokenRequest;
+import com.quant.craft.backend.presentation.controller.dto.auth.TokenResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

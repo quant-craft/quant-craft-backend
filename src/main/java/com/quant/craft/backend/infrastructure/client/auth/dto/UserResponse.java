@@ -1,6 +1,6 @@
-package com.quant.craft.backend.infrastructure.client.dto;
+package com.quant.craft.backend.infrastructure.client.auth.dto;
 
-import com.quant.craft.backend.domain.User;
+import com.quant.craft.backend.domain.user.User;
 import com.quant.craft.backend.domain.auth.OAuthProvider;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

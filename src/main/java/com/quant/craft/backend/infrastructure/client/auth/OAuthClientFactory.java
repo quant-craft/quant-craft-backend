@@ -1,8 +1,8 @@
-package com.quant.craft.backend.infrastructure.client;
+package com.quant.craft.backend.infrastructure.client.auth;
 
 import com.quant.craft.backend.domain.auth.OAuthProvider;
-import com.quant.craft.backend.infrastructure.client.google.GoogleOAuthClient;
-import com.quant.craft.backend.infrastructure.client.kakao.KakaoOAuthClient;
+import com.quant.craft.backend.infrastructure.client.auth.google.GoogleOAuthClient;
+import com.quant.craft.backend.infrastructure.client.auth.kakao.KakaoOAuthClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

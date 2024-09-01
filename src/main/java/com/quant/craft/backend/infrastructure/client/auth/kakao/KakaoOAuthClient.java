@@ -1,44 +1,42 @@
-package com.quant.craft.backend.infrastructure.client.google;
+package com.quant.craft.backend.infrastructure.client.auth.kakao;
 
 import com.quant.craft.backend.domain.auth.OAuthProvider;
 import com.quant.craft.backend.exception.BadRequestException;
-import com.quant.craft.backend.infrastructure.client.OAuthClient;
-import com.quant.craft.backend.infrastructure.client.dto.UserResponse;
-import com.quant.craft.backend.infrastructure.client.google.dto.GoogleUserResponse;
-import com.quant.craft.backend.infrastructure.client.google.dto.GoogleTokenResponse;
+import com.quant.craft.backend.infrastructure.client.auth.OAuthClient;
+import com.quant.craft.backend.infrastructure.client.auth.dto.UserResponse;
+import com.quant.craft.backend.infrastructure.client.auth.kakao.dto.KakaoUserResponse;
+import com.quant.craft.backend.infrastructure.client.auth.kakao.dto.KakaoTokenResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClient;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Component
-public class GoogleOAuthClient extends OAuthClient {
+public class KakaoOAuthClient extends OAuthClient {
 
-    public GoogleOAuthClient(
+    public KakaoOAuthClient(
             RestClient client,
             @Value("${application.host.backend}") String host,
-            @Value("${oauth.google.client-id}") String clientId,
-            @Value("${oauth.google.client-secret}") String clientSecret,
-            @Value("${oauth.google.auth-server-url}") String authServerUrl,
-            @Value("${oauth.google.api-server-url}") String apiServerUrl
+            @Value("${oauth.kakao.client-id}") String clientId,
+            @Value("${oauth.kakao.auth-server-url}") String authServerUrl,
+            @Value("${oauth.kakao.api-server-url}") String apiServerUrl
     ) {
-        super(client, host, clientId, clientSecret, authServerUrl, apiServerUrl);
+        super(client, host, clientId, null, authServerUrl, apiServerUrl);
     }
 
     @Override
     public String generateAccessToken(String authorizationCode, String redirectUri) {
         try {
-            String url = String.format("%s/token", authServerUrl);
-            GoogleTokenResponse response = client.post()
+            String url = String.format("%s/oauth/token", authServerUrl);
+            KakaoTokenResponse response = client.post()
                     .uri(url)
-                    .body(buildAccessTokenRequest(authorizationCode, redirectUri))
+                    .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+                    .body(buildAccessTokenRequest(authorizationCode))
                     .retrieve()
-                    .body(GoogleTokenResponse.class);
+                    .body(KakaoTokenResponse.class);
 
             if (response == null) {
                 throw new BadRequestException("TokenResponse cannot be null!");
@@ -50,16 +48,11 @@ public class GoogleOAuthClient extends OAuthClient {
         }
     }
 
-    private MultiValueMap<String, String> buildAccessTokenRequest(
-            String authorizationCode,
-            String redirectUrl
-    ) {
+    private MultiValueMap<String, String> buildAccessTokenRequest(String authorizationCode) {
         MultiValueMap<String, String> requestBody = new LinkedMultiValueMap<>();
         requestBody.add("grant_type", "authorization_code");
         requestBody.add("code", authorizationCode);
         requestBody.add("client_id", clientId);
-        requestBody.add("client_secret", clientSecret);
-        requestBody.add("redirect_uri", redirectUrl);
 
         return requestBody;
     }
@@ -67,22 +60,22 @@ public class GoogleOAuthClient extends OAuthClient {
     @Override
     public UserResponse getUserResponse(String accessToken) {
         try {
-            String url = String.format("%s/oauth2/v2/userinfo", apiServerUrl);
-            GoogleUserResponse response = client.get()
+            String url = String.format("%s/user/me", apiServerUrl);
+            KakaoUserResponse response = client.get()
                     .uri(url)
                     .header(HttpHeaders.AUTHORIZATION, OAuthClient.BEARER_PREFIX + accessToken)
+                    .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_FORM_URLENCODED_VALUE)
                     .retrieve()
-                    .body(GoogleUserResponse.class);
+                    .body(KakaoUserResponse.class);
 
             if (response == null) {
-                throw new BadRequestException("GoogleUserResponse cannot be null!");
+                throw new BadRequestException("KakaoUserResponse cannot be null!");
             }
 
             return UserResponse.builder()
-                    .email(response.getEmail())
-                    .nickname(response.getName())
+                    .nickname(response.getKakaoAccount().getProfile().getNickname())
                     .oauthId(response.getId())
-                    .oauthProvider(OAuthProvider.GOOGLE)
+                    .oauthProvider(OAuthProvider.KAKAO)
                     .build();
         } catch (Exception e) {
             throw new BadRequestException("User Information Error. e: " + e);

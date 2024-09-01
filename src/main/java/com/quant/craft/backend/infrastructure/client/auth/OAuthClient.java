@@ -1,8 +1,6 @@
-package com.quant.craft.backend.infrastructure.client;
+package com.quant.craft.backend.infrastructure.client.auth;
 
-import com.quant.craft.backend.domain.auth.OAuthProvider;
-import com.quant.craft.backend.infrastructure.client.dto.UserResponse;
-import com.quant.craft.backend.presentation.controller.AuthController;
+import com.quant.craft.backend.infrastructure.client.auth.dto.UserResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.client.RestClient;
 

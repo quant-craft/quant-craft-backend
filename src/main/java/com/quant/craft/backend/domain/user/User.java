@@ -1,4 +1,4 @@
-package com.quant.craft.backend.domain;
+package com.quant.craft.backend.domain.user;
 
 import com.quant.craft.backend.domain.auth.OAuthProvider;
 import jakarta.persistence.*;
