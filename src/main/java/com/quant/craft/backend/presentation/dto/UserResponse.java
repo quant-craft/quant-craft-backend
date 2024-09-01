@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Getter
 public class UserResponse {
 
-    private Long id;
+    private String oauthId;
 
     private String nickname;
 
@@ -19,12 +19,15 @@ public class UserResponse {
 
     private OAuthProvider oauthProvider;
 
+    private Long point;
+
     public static UserResponse from(User user) {
         return new UserResponse(
-                user.getId(),
+                user.getOauthId(),
                 user.getNickname(),
                 user.getEmail(),
-                user.getOauthProvider()
+                user.getOauthProvider(),
+                user.getPoint()
         );
     }
 }
