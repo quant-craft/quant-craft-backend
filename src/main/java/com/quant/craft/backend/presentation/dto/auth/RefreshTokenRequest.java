@@ -1,4 +1,4 @@
-package com.quant.craft.backend.presentation.dto;
+package com.quant.craft.backend.presentation.dto.auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
