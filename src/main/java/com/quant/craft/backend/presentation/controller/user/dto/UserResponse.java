@@ -11,8 +11,6 @@ import lombok.NoArgsConstructor;
 @Getter
 public class UserResponse {
 
-    private String oauthId;
-
     private String nickname;
 
     private String email;
@@ -23,7 +21,6 @@ public class UserResponse {
 
     public static UserResponse from(User user) {
         return new UserResponse(
-                user.getOauthId(),
                 user.getNickname(),
                 user.getEmail(),
                 user.getOauthProvider(),
