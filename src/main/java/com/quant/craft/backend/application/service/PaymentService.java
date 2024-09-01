@@ -4,7 +4,7 @@ import com.quant.craft.backend.domain.payment.Payment;
 import com.quant.craft.backend.infrastructure.client.payment.TossPaymentsClient;
 import com.quant.craft.backend.infrastructure.client.payment.dto.TossPaymentsConfirmRequest;
 import com.quant.craft.backend.infrastructure.client.payment.dto.TossPaymentsPayment;
-import com.quant.craft.backend.presentation.controller.dto.payment.PaymentConfirmRequest;
+import com.quant.craft.backend.presentation.controller.payment.dto.PaymentConfirmRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

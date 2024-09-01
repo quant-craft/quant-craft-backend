@@ -1,4 +1,4 @@
-package com.quant.craft.backend.presentation.controller.dto.payment;
+package com.quant.craft.backend.presentation.controller.payment.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

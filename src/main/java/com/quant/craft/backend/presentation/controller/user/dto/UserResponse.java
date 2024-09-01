@@ -1,4 +1,4 @@
-package com.quant.craft.backend.presentation.controller.dto.user;
+package com.quant.craft.backend.presentation.controller.user.dto;
 
 import com.quant.craft.backend.domain.user.User;
 import com.quant.craft.backend.domain.auth.OAuthProvider;

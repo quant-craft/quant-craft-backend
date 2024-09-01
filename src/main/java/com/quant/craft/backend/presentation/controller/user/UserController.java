@@ -1,10 +1,10 @@
-package com.quant.craft.backend.presentation.controller;
+package com.quant.craft.backend.presentation.controller.user;
 
 
 import com.quant.craft.backend.application.service.UserService;
 import com.quant.craft.backend.domain.user.User;
 import com.quant.craft.backend.presentation.argumentresolver.RequiredLogin;
-import com.quant.craft.backend.presentation.controller.dto.user.UserResponse;
+import com.quant.craft.backend.presentation.controller.user.dto.UserResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

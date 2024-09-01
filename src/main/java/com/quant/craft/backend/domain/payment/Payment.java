@@ -11,7 +11,6 @@ import java.math.BigDecimal;
 @Getter
 @Entity
 @Table(name = "payments")
-@RequiredArgsConstructor
 public class Payment {
 
     @Id

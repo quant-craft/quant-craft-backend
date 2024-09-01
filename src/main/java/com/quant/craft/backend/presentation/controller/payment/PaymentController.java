@@ -1,7 +1,7 @@
-package com.quant.craft.backend.presentation.controller;
+package com.quant.craft.backend.presentation.controller.payment;
 
 import com.quant.craft.backend.application.service.PaymentService;
-import com.quant.craft.backend.presentation.controller.dto.payment.PaymentConfirmRequest;
+import com.quant.craft.backend.presentation.controller.payment.dto.PaymentConfirmRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ModelAttribute;
