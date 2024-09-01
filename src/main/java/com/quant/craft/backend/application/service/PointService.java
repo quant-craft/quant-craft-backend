@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
@@ -31,7 +30,7 @@ public class PointService {
     @Transactional
     public void charge(User user, PointChargeRequest request) {
         TossPaymentsPayment tossPaymentsPayment = client.confirm(new TossPaymentsConfirmRequest(
-                request.getPaymentKey(), request.getAmount(), UUID.randomUUID().toString())
+                request.getPaymentKey(), request.getAmount(), request.getOrderId())
         );
 
         PointTxn pointTxn = pointTxnRepository.save(PointTxn.builder()

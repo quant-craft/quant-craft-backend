@@ -12,4 +12,6 @@ public class PointChargeRequest {
     private String paymentKey;
 
     private Long amount;
+
+    private String orderId;
 }

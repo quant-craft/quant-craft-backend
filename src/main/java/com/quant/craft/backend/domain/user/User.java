@@ -4,6 +4,7 @@ import com.quant.craft.backend.domain.auth.OAuthProvider;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.Check;
+import org.hibernate.annotations.ColumnDefault;
 
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -26,11 +27,13 @@ public class User {
     @Column(nullable = false)
     private String oauthId;
 
-    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private OAuthProvider oauthProvider;
 
+    @Builder.Default
     @Check(constraints = "point >= 0")
+    @Column(nullable = false)
     private Long point = 0L;
 
     private String refreshToken;
