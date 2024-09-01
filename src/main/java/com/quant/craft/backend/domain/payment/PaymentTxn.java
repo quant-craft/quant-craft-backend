@@ -23,9 +23,6 @@ public class PaymentTxn {
     private BigDecimal amount;
 
     @Column(nullable = false)
-    private String orderId;
-
-    @Column(nullable = false)
     private String paymentKey;
 
     @Enumerated(EnumType.STRING)

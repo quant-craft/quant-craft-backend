@@ -16,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -29,10 +30,8 @@ public class PointService {
 
     @Transactional
     public void charge(User user, PointChargeRequest request) {
-        String orderId = UUID.randomUUID().toString();
-
         TossPaymentsPayment tossPaymentsPayment = client.confirm(new TossPaymentsConfirmRequest(
-                request.getPaymentKey(), request.getAmount(), orderId)
+                request.getPaymentKey(), request.getAmount(), UUID.randomUUID().toString())
         );
 
         PointTxn pointTxn = pointTxnRepository.save(PointTxn.builder()
@@ -44,7 +43,6 @@ public class PointService {
 
         paymentTxnRepository.save(PaymentTxn.builder()
                 .amount(tossPaymentsPayment.getTotalAmount())
-                .orderId(tossPaymentsPayment.getOrderId())
                 .paymentKey(tossPaymentsPayment.getPaymentKey())
                 .status(PaymentTxnStatus.DONE)
                 .pointTxn(pointTxn)
@@ -53,5 +51,9 @@ public class PointService {
 
         user.updatePoint(user.getPoint() + request.getAmount());
         userRepository.save(user);
+    }
+
+    public List<PointTxn> findPointTxns(User user) {
+        return pointTxnRepository.findAllByUserId(user.getId());
     }
 }
