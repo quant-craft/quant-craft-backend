@@ -1,5 +1,6 @@
 package com.quant.craft.backend.domain.user;
 
+import com.quant.craft.backend.domain.BaseEntity;
 import com.quant.craft.backend.domain.auth.OAuthProvider;
 import jakarta.persistence.*;
 import lombok.*;
@@ -12,7 +13,7 @@ import org.hibernate.annotations.ColumnDefault;
 @Getter
 @Entity
 @Table(name = "users")
-public class User {
+public class User extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

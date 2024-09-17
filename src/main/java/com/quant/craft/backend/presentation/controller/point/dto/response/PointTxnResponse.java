@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -18,12 +20,18 @@ public class PointTxnResponse {
 
     private String status;
 
+    private LocalDateTime createdAt;
+
+    private LocalDateTime updatedAt;
+
     public static PointTxnResponse from(PointTxn pointTxn) {
         return new PointTxnResponse(
                 pointTxn.getId(),
                 pointTxn.getUser().getId(),
                 pointTxn.getPoint(),
-                pointTxn.getStatus().name()
+                pointTxn.getStatus().name(),
+                pointTxn.getCreatedAt(),
+                pointTxn.getUpdatedAt()
         );
     }
 }

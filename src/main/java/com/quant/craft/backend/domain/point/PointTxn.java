@@ -1,5 +1,6 @@
 package com.quant.craft.backend.domain.point;
 
+import com.quant.craft.backend.domain.BaseEntity;
 import com.quant.craft.backend.domain.user.User;
 import jakarta.persistence.*;
 import lombok.*;
@@ -10,7 +11,7 @@ import lombok.*;
 @Getter
 @Entity
 @Table(name = "point_txns")
-public class PointTxn {
+public class PointTxn extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
