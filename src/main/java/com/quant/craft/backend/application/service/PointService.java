@@ -2,8 +2,8 @@ package com.quant.craft.backend.application.service;
 
 import com.quant.craft.backend.domain.payment.PaymentTxn;
 import com.quant.craft.backend.domain.payment.PaymentTxnStatus;
-import com.quant.craft.backend.domain.point.PointTxnStatus;
 import com.quant.craft.backend.domain.point.PointTxn;
+import com.quant.craft.backend.domain.point.PointTxnStatus;
 import com.quant.craft.backend.domain.user.User;
 import com.quant.craft.backend.infrastructure.client.payment.TossPaymentsClient;
 import com.quant.craft.backend.infrastructure.client.payment.dto.TossPaymentsConfirmRequest;

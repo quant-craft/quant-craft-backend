@@ -1,7 +1,7 @@
 package com.quant.craft.backend.presentation.controller.user.dto;
 
-import com.quant.craft.backend.domain.user.User;
 import com.quant.craft.backend.domain.auth.OAuthProvider;
+import com.quant.craft.backend.domain.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
