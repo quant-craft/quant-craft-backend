@@ -11,7 +11,9 @@ import com.quant.craft.backend.infrastructure.client.payment.dto.TossPaymentsPay
 import com.quant.craft.backend.infrastructure.repository.PaymentTxnRepository;
 import com.quant.craft.backend.infrastructure.repository.PointTxnRepository;
 import com.quant.craft.backend.infrastructure.repository.UserRepository;
-import com.quant.craft.backend.presentation.controller.point.dto.PointChargeRequest;
+import com.quant.craft.backend.presentation.controller.point.dto.request.PointChargeRequest;
+import com.quant.craft.backend.presentation.controller.point.dto.response.PointTxnResponse;
+import com.quant.craft.backend.presentation.controller.point.dto.response.PointTxnsResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -52,7 +54,10 @@ public class PointService {
         userRepository.save(user);
     }
 
-    public List<PointTxn> findPointTxns(User user) {
-        return pointTxnRepository.findAllByUserId(user.getId());
+    public PointTxnsResponse findPointTxns(User user) {
+        List<PointTxn> pointTxns = pointTxnRepository.findAllByUserId(user.getId());
+        return new PointTxnsResponse(pointTxns.stream()
+                .map(PointTxnResponse::from)
+                .toList());
     }
 }

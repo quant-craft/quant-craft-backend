@@ -1,4 +1,4 @@
-package com.quant.craft.backend.presentation.controller.point.dto;
+package com.quant.craft.backend.presentation.controller.point.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
