@@ -7,14 +7,13 @@ import com.quant.craft.backend.presentation.controller.strategy.dto.response.Str
 import com.quant.craft.backend.presentation.controller.strategy.dto.response.StrategyResponse;
 import com.quant.craft.backend.presentation.controller.strategy.dto.request.StrategyPaginationRequest;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @Controller
-@RequestMapping("/api/strategy")
+@RequestMapping("/api/strategies")
 public class StrategyController {
 
     private final StrategyService service;
@@ -22,6 +21,12 @@ public class StrategyController {
     @GetMapping("/{strategyId}")
     public ResponseEntity<StrategyResponse> viewStrategy(@PathVariable Long strategyId) {
         return ResponseEntity.ok(service.findStrategy(strategyId));
+    }
+
+    @PostMapping("/{strategyId}/buy")
+    public ResponseEntity<Void> buyStrategy(@RequiredLogin User user, @PathVariable Long strategyId) {
+        service.buyStrategy(user, strategyId);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/paging")
@@ -32,11 +37,5 @@ public class StrategyController {
     @GetMapping("/search")
     public ResponseEntity<StrategiesResponse> searchStrategies(@ModelAttribute StrategyPaginationRequest request) {
         return ResponseEntity.ok(service.searchStrategies(request));
-    }
-
-    @PostMapping("/{strategyId}/buy")
-    public ResponseEntity<Void> buyStrategy(@RequiredLogin User user, @PathVariable Long strategyId) {
-        service.buyStrategy(user, strategyId);
-        return ResponseEntity.ok().build();
     }
 }
