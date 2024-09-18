@@ -1,14 +1,14 @@
 package com.quant.craft.backend.application.service;
 
 import com.quant.craft.backend.domain.auth.JwtTokenProvider;
-import com.quant.craft.backend.domain.User;
+import com.quant.craft.backend.domain.user.User;
 import com.quant.craft.backend.exception.NotFoundException;
-import com.quant.craft.backend.infrastructure.client.OAuthClient;
-import com.quant.craft.backend.infrastructure.client.OAuthClientFactory;
-import com.quant.craft.backend.infrastructure.client.dto.UserResponse;
+import com.quant.craft.backend.infrastructure.client.auth.OAuthClient;
+import com.quant.craft.backend.infrastructure.client.auth.OAuthClientFactory;
+import com.quant.craft.backend.infrastructure.client.auth.dto.UserResponse;
 import com.quant.craft.backend.infrastructure.repository.UserRepository;
-import com.quant.craft.backend.presentation.dto.AuthorizationCodeRequest;
-import com.quant.craft.backend.presentation.dto.TokenResponse;
+import com.quant.craft.backend.presentation.controller.auth.dto.request.AuthorizationCodeRequest;
+import com.quant.craft.backend.presentation.controller.auth.dto.response.TokenResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

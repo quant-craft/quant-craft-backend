@@ -1,7 +1,7 @@
 package com.quant.craft.backend.presentation.argumentresolver;
 
 import com.quant.craft.backend.application.service.AuthService;
-import com.quant.craft.backend.domain.User;
+import com.quant.craft.backend.domain.user.User;
 import com.quant.craft.backend.exception.NotFoundException;
 import com.quant.craft.backend.exception.UnauthorizedException;
 import com.quant.craft.backend.presentation.interceptor.AuthorizationExtractor;
