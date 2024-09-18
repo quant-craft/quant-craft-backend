@@ -11,6 +11,7 @@ import com.quant.craft.backend.infrastructure.repository.PointTxnRepository;
 import com.quant.craft.backend.infrastructure.repository.StrategyRepository;
 import com.quant.craft.backend.infrastructure.repository.UserRepository;
 import com.quant.craft.backend.infrastructure.repository.UserStrategyRepository;
+import com.quant.craft.backend.presentation.controller.strategy.dto.StrategyResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -56,5 +57,10 @@ public class StrategyService {
                 .strategy(strategy)
                 .build()
         );
+    }
+
+    public StrategyResponse findStrategy(Long strategyId) {
+        Strategy strategy = repository.findById(strategyId).orElseThrow(() -> new NotFoundException("strategy not found"));
+        return StrategyResponse.from(strategy);
     }
 }

@@ -1,5 +1,6 @@
 package com.quant.craft.backend.domain.strategy;
 
+import com.quant.craft.backend.domain.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -11,7 +12,7 @@ import java.math.BigDecimal;
 @Getter
 @Entity
 @Table(name = "strategies")
-public class Strategy {
+public class Strategy extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
