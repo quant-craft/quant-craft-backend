@@ -85,4 +85,22 @@ public class StrategyService {
                         .toList()
         );
     }
+
+    public StrategiesResponse searchStrategies(StrategyPaginationRequest request) {
+        int pageBasedIndex = request.getPage() - 1;
+
+        Sort sort = StrategySortOption.getMatchedSort(request.getSortOption());
+        Page<Strategy> strategies = repository.findByNameContainingIgnoreCase(
+                request.getKeyword(),
+                PageRequest.of(pageBasedIndex, request.getSize(), sort)
+        );
+
+        return new StrategiesResponse(
+                strategies.getTotalElements(),
+                strategies.getTotalPages(),
+                strategies.getContent().stream()
+                        .map(StrategyResponse::from)
+                        .toList()
+        );
+    }
 }

@@ -29,6 +29,11 @@ public class StrategyController {
         return ResponseEntity.ok(service.findStrategies(request));
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<StrategiesResponse> searchStrategies(@ModelAttribute StrategyPaginationRequest request) {
+        return ResponseEntity.ok(service.searchStrategies(request));
+    }
+
     @PostMapping("/{strategyId}/buy")
     public ResponseEntity<Void> buyStrategy(@RequiredLogin User user, @PathVariable Long strategyId) {
         service.buyStrategy(user, strategyId);

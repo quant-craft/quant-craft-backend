@@ -11,7 +11,9 @@ public class StrategyPaginationRequest {
 
     private String sortOption;
 
-    private Integer page;
+    private String keyword;
 
-    private Integer size;
+    private Integer page = 1;
+
+    private Integer size = 10;
 }
