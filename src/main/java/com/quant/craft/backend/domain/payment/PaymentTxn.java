@@ -2,6 +2,7 @@ package com.quant.craft.backend.domain.payment;
 
 import com.quant.craft.backend.domain.BaseEntity;
 import com.quant.craft.backend.domain.point.PointTxn;
+import com.quant.craft.backend.domain.user.User;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -29,6 +30,10 @@ public class PaymentTxn extends BaseEntity {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private PaymentTxnStatus status;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     @OneToOne
     @JoinColumn(name = "point_txn_id", nullable = false)
