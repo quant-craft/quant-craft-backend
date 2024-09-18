@@ -46,6 +46,7 @@ public class PointService {
                 .amount(tossPaymentsPayment.getTotalAmount())
                 .paymentKey(tossPaymentsPayment.getPaymentKey())
                 .status(PaymentTxnStatus.DONE)
+                .user(user)
                 .pointTxn(pointTxn)
                 .build()
         );
