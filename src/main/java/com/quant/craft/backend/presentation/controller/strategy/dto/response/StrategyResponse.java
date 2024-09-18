@@ -1,4 +1,4 @@
-package com.quant.craft.backend.presentation.controller.strategy.dto;
+package com.quant.craft.backend.presentation.controller.strategy.dto.response;
 
 import com.quant.craft.backend.domain.strategy.Strategy;
 import lombok.AllArgsConstructor;

@@ -11,8 +11,15 @@ import com.quant.craft.backend.infrastructure.repository.PointTxnRepository;
 import com.quant.craft.backend.infrastructure.repository.StrategyRepository;
 import com.quant.craft.backend.infrastructure.repository.UserRepository;
 import com.quant.craft.backend.infrastructure.repository.UserStrategyRepository;
-import com.quant.craft.backend.presentation.controller.strategy.dto.StrategyResponse;
+import com.quant.craft.backend.presentation.controller.strategy.dto.request.StrategyPaginationRequest;
+import com.quant.craft.backend.presentation.controller.strategy.dto.response.StrategiesResponse;
+import com.quant.craft.backend.presentation.controller.strategy.dto.response.StrategyResponse;
+import com.quant.craft.backend.domain.strategy.StrategySortOption;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -62,5 +69,20 @@ public class StrategyService {
     public StrategyResponse findStrategy(Long strategyId) {
         Strategy strategy = repository.findById(strategyId).orElseThrow(() -> new NotFoundException("strategy not found"));
         return StrategyResponse.from(strategy);
+    }
+
+    public StrategiesResponse findStrategies(StrategyPaginationRequest request) {
+        int pageBasedIndex = request.getPage() - 1;
+
+        Sort sort = StrategySortOption.getMatchedSort(request.getSortOption());
+        Page<Strategy> strategies = repository.findAll(PageRequest.of(pageBasedIndex, request.getSize(), sort));
+
+        return new StrategiesResponse(
+                strategies.getTotalElements(),
+                strategies.getTotalPages(),
+                strategies.getContent().stream()
+                        .map(StrategyResponse::from)
+                        .toList()
+        );
     }
 }
