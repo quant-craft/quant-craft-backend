@@ -5,7 +5,7 @@ name: Quant-Craft Push Builder [BE]
 
 on:
   push:
-    branches: [ main, feat/cd ]
+    branches: [ main ]
 
 jobs:
   deploy:
