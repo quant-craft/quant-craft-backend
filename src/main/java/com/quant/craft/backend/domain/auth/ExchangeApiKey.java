@@ -20,7 +20,7 @@ public class ExchangeApiKey extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private ExchangeType exchange;
+    private ExchangeType exchangeType;
 
     @Column(nullable = false)
     private String apiKey;
