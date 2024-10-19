@@ -20,7 +20,7 @@ public class ExchangeApiKey extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private ExchangeType exchangeType;
+    private ExchangeType exchange;
 
     @Column(nullable = false)
     private String apiKey;
@@ -29,6 +29,6 @@ public class ExchangeApiKey extends BaseEntity {
     private String secretKey;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id", nullable = false, foreignKey = @ForeignKey(name = "exchange_api_keys_user_id_fk"))
     private User user;
 }

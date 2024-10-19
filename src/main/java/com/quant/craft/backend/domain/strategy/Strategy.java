@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 @Builder
 @Getter
 @Entity
-@Table(name = "strategies")
+@Table(name = "strategies", schema = "trade")
 public class Strategy extends BaseEntity {
 
     @Id
@@ -19,15 +19,19 @@ public class Strategy extends BaseEntity {
     @Column(nullable = false)
     private Long id;
 
-    @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
     private String description;
 
-    @Column(nullable = false)
-    private Long price;
+    private float leverage;
 
-    @Column(nullable = false)
-    private String path;
+    private boolean exclusiveOrders;
+
+    private boolean hedgeMode;
+
+    private String timeframe;
+
+    private String symbol;
+
+    private String exchange;
 }

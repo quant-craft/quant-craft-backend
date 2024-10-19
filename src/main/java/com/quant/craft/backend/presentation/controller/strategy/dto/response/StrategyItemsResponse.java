@@ -9,9 +9,9 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class StrategiesResponse {
+public class StrategyItemsResponse {
 
     private Long totalStrategyCount;
     private Integer totalPage;
-    private List<StrategyResponse> strategies;
+    private List<StrategyItemResponse> strategies;
 }
