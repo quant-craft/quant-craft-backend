@@ -1,6 +1,5 @@
 package com.quant.craft.backend.infrastructure.repository;
 
-import com.quant.craft.backend.domain.strategy.Strategy;
 import com.quant.craft.backend.domain.strategy.StrategyItem;
 import lombok.NonNull;
 import org.springframework.data.domain.Page;

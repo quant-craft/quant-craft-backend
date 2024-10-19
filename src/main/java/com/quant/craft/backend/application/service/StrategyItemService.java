@@ -1,6 +1,5 @@
 package com.quant.craft.backend.application.service;
 
-import com.quant.craft.backend.domain.strategy.Strategy;
 import com.quant.craft.backend.domain.strategy.StrategyItem;
 import com.quant.craft.backend.domain.strategy.StrategyItemSortOption;
 import com.quant.craft.backend.exception.NotFoundException;

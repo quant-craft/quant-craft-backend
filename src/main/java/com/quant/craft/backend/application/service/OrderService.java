@@ -6,7 +6,7 @@ import com.quant.craft.backend.domain.order.OrderStatus;
 import com.quant.craft.backend.domain.point.PointTxn;
 import com.quant.craft.backend.domain.point.PointTxnStatus;
 import com.quant.craft.backend.domain.strategy.StrategyItem;
-import com.quant.craft.backend.domain.strategy.UserStrategyItem;
+import com.quant.craft.backend.domain.strategy.UserStrategy;
 import com.quant.craft.backend.domain.user.User;
 import com.quant.craft.backend.exception.BadRequestException;
 import com.quant.craft.backend.exception.NotFoundException;
@@ -28,7 +28,7 @@ public class OrderService {
 
     private final UserRepository userRepository;
 
-    private final UserStrategyItemRepository userStrategyItemRepository;
+    private final UserStrategyRepository userStrategyRepository;
 
     private final PointTxnRepository pointTxnRepository;
 
@@ -37,7 +37,7 @@ public class OrderService {
         StrategyItem strategyItem = strategyItemRepository.findById(strategyItemId)
                 .orElseThrow(() -> new NotFoundException("strategy item not found"));
 
-        if (userStrategyItemRepository.existsByUserIdAndStrategyItemId(user.getId(), strategyItem.getStrategy().getId())) {
+        if (userStrategyRepository.existsByUserIdAndStrategyId(user.getId(), strategyItem.getStrategy().getId())) {
             throw new BadRequestException("already bought");
         }
 
@@ -56,10 +56,10 @@ public class OrderService {
                         .build()
         );
 
-        userStrategyItemRepository.save(
-                UserStrategyItem.builder()
+        userStrategyRepository.save(
+                UserStrategy.builder()
                         .user(user)
-                        .strategyItem(strategyItem)
+                        .strategy(strategyItem.getStrategy())
                         .build()
         );
 
