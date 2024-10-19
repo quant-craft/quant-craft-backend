@@ -18,7 +18,7 @@ public class PointTxn extends BaseEntity {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id", nullable = false, foreignKey = @ForeignKey(name = "point_txns_user_id_fk"))
     private User user;
 
     @Column(nullable = false)
