@@ -10,8 +10,8 @@ import lombok.*;
 @Builder
 @Getter
 @Entity
-@Table(name = "user_strategy_items")
-public class UserStrategyItem extends BaseEntity {
+@Table(name = "user_strategies")
+public class UserStrategy extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,6 +23,6 @@ public class UserStrategyItem extends BaseEntity {
     private User user;
 
     @OneToOne
-    @JoinColumn(name = "strategy_item_id", nullable = false, foreignKey = @ForeignKey(name = "user_strategies_strategy_item_id_fk"))
-    private StrategyItem strategyItem;
+    @JoinColumn(name = "strategy_id", nullable = false, foreignKey = @ForeignKey(name = "user_strategies_strategy_item_id_fk"))
+    private Strategy strategy;
 }
