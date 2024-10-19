@@ -2,6 +2,7 @@ plugins {
     java
     id("org.springframework.boot") version "3.3.2"
     id("io.spring.dependency-management") version "1.1.6"
+    id("org.flywaydb.flyway") version "10.0.1"
 }
 
 group = "com.quant.craft"
@@ -31,8 +32,11 @@ dependencies {
 
     // db
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-    implementation("org.postgresql:postgresql:42.7.3")
+    implementation("org.postgresql:postgresql")
     implementation("com.querydsl:querydsl-jpa:5.0.0:jakarta")
+    implementation("org.flywaydb:flyway-database-postgresql")
+    implementation("org.flywaydb:flyway-core")
+
     annotationProcessor("com.querydsl:querydsl-apt:5.0.0:jakarta")
     annotationProcessor("jakarta.annotation:jakarta.annotation-api")
     annotationProcessor("jakarta.persistence:jakarta.persistence-api")
