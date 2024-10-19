@@ -19,10 +19,10 @@ public class UserStrategy extends BaseEntity {
     private Long id;
 
     @OneToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id", nullable = false, foreignKey = @ForeignKey(name = "user_strategies_user_id_fk"))
     private User user;
 
     @OneToOne
-    @JoinColumn(name = "strategy_id", nullable = false)
+    @JoinColumn(name = "strategy_id", nullable = false, foreignKey = @ForeignKey(name = "user_strategies_strategy_id_fk"))
     private Strategy strategy;
 }

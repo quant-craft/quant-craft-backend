@@ -32,10 +32,10 @@ public class PaymentTxn extends BaseEntity {
     private PaymentTxnStatus status;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id", nullable = false, foreignKey = @ForeignKey(name = "payment_txns_user_id_fk"))
     private User user;
 
     @OneToOne
-    @JoinColumn(name = "point_txn_id", nullable = false)
+    @JoinColumn(name = "point_txn_id", nullable = false, foreignKey = @ForeignKey(name = "payment_txns_point_txn_id_fk"))
     private PointTxn pointTxn;
 }
