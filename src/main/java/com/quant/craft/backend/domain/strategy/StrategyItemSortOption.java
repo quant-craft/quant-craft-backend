@@ -1,6 +1,5 @@
 package com.quant.craft.backend.domain.strategy;
 
-import jakarta.annotation.Nullable;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
@@ -11,7 +10,7 @@ import java.util.Objects;
 
 @Getter
 @RequiredArgsConstructor
-public enum StrategySortOption {
+public enum StrategyItemSortOption {
 
     LATEST(Sort.by(Sort.Direction.DESC, "id")),
 

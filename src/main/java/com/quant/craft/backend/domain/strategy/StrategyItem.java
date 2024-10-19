@@ -1,37 +1,31 @@
 package com.quant.craft.backend.domain.strategy;
 
-import com.quant.craft.backend.domain.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.math.BigDecimal;
 
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
 @Getter
 @Entity
-@Table(name = "strategies", schema = "trade")
-public class Strategy extends BaseEntity {
+@Table(name = "strategy_items")
+public class StrategyItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
     private Long id;
 
+    @Column(nullable = false)
     private String name;
 
+    @Column(nullable = false)
     private String description;
 
-    private float leverage;
+    @Column(nullable = false)
+    private Long price;
 
-    private boolean exclusiveOrders;
-
-    private boolean hedgeMode;
-
-    private String timeframe;
-
-    private String symbol;
-
-    private String exchange;
+    @OneToOne
+    @JoinColumn(name = "strategy_id", nullable = false, foreignKey = @ForeignKey(name = "strategy_items_strategy_id_fk"))
+    private Strategy strategy;
 }

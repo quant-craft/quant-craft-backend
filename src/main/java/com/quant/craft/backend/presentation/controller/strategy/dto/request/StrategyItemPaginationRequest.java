@@ -9,7 +9,7 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class StrategyPaginationRequest {
+public class StrategyItemPaginationRequest {
 
     private String sortOption;
 
