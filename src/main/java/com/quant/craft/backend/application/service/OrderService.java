@@ -16,6 +16,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 public class OrderService {
@@ -31,6 +33,18 @@ public class OrderService {
     private final UserStrategyRepository userStrategyRepository;
 
     private final PointTxnRepository pointTxnRepository;
+
+    public List<OrderResponse> list(User user) {
+        return repository.findAllByUserId(user.getId()).stream()
+                .map(order -> {
+                    List<OrderItem> orderItems = orderItemRepository.findAllByOrderId(order.getId());
+                    if (orderItems.isEmpty()) {
+                        throw new NotFoundException("order item not found");
+                    }
+                    return OrderResponse.from(order, orderItems.get(0));
+                })
+                .toList();
+    }
 
     @Transactional
     public OrderResponse buyStrategyItem(User user, Long strategyItemId) {
@@ -67,6 +81,7 @@ public class OrderService {
                 Order.builder()
                         .status(OrderStatus.DONE)
                         .totalPrice(strategyItem.getPrice())
+                        .user(user)
                         .build()
         );
 

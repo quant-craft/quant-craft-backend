@@ -9,12 +9,19 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Controller
 @RequestMapping("/api/orders")
 public class OrderController {
 
     private final OrderService service;
+
+    @GetMapping
+    public ResponseEntity<List<OrderResponse>> list(@RequiredLogin User user) {
+        return ResponseEntity.ok(service.list(user));
+    }
 
     @PostMapping("/strategy-items/{strategyItemId}")
     public ResponseEntity<OrderResponse> buyStrategyItem(@RequiredLogin User user, @PathVariable Long strategyItemId) {

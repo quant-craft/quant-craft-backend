@@ -1,6 +1,7 @@
 package com.quant.craft.backend.domain.order;
 
 import com.quant.craft.backend.domain.BaseEntity;
+import com.quant.craft.backend.domain.user.User;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -28,4 +29,8 @@ public class Order extends BaseEntity {
     private Long totalPrice;
 
     private LocalDateTime canceledAt;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false, foreignKey = @ForeignKey(name = "orders_user_id_fk"))
+    private User user;
 }
