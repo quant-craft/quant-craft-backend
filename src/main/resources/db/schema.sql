@@ -5,7 +5,7 @@
         updated_at timestamp(6) not null,
         user_id bigint not null,
         api_key varchar(255) not null,
-        exchange_type varchar(255) not null check (exchange_type in ('BINANCE','COINBASE','KRAKEN','BYBIT','SIMULATED','UNKNOWN')),
+        exchange varchar(255) not null check (exchange in ('BINANCE','COINBASE','KRAKEN','BYBIT','SIMULATED','UNKNOWN')),
         secret_key varchar(255) not null,
         primary key (id)
     );
@@ -66,7 +66,7 @@
     );
 
     alter table if exists exchange_api_keys 
-       add constraint FKla32n58cpelb0t78gkrtvdv33 
+       add constraint exchange_api_keys_user_id_fk 
        foreign key (user_id) 
        references users;
 
