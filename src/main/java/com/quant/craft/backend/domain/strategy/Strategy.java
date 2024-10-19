@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 @Builder
 @Getter
 @Entity
-@Table(name = "strategies")
+@Table(name = "strategies", schema = "trade")
 public class Strategy extends BaseEntity {
 
     @Id

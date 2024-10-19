@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+// Note: This repository interacts with the 'strategies' table in the 'trade' schema
 public interface StrategyRepository extends JpaRepository<Strategy, Long> {
 
     @NonNull Page<Strategy> findAll(@NonNull Pageable pageable);
