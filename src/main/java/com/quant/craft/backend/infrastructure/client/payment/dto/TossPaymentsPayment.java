@@ -1,47 +1,46 @@
 package com.quant.craft.backend.infrastructure.client.payment.dto;
 
 import jakarta.annotation.Nullable;
+import java.math.BigDecimal;
+import java.time.Instant;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.math.BigDecimal;
-import java.time.Instant;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 public class TossPaymentsPayment {
 
-    private String paymentKey;
+  private String paymentKey;
 
-    private String orderId;
+  private String orderId;
 
-    private BigDecimal totalAmount;
+  private BigDecimal totalAmount;
 
-    private TossPaymentsPaymentStatus status;
+  private TossPaymentsPaymentStatus status;
 
-    @Nullable
-    private Instant approvedAt;
+  @Nullable
+  private Instant approvedAt;
 
-    @Nullable
-    private TossPaymentsFailure failure;
+  @Nullable
+  private TossPaymentsFailure failure;
 
-    public enum TossPaymentsPaymentStatus {
+  public enum TossPaymentsPaymentStatus {
 
-        READY,
-        IN_PROGRESS,
-        WAITING_FOR_DEPOSIT,
-        DONE,
-        CANCELED,
-        PARTIAL_CANCELED,
-        ABORTED,
-        EXPIRED;
-    }
+    READY,
+    IN_PROGRESS,
+    WAITING_FOR_DEPOSIT,
+    DONE,
+    CANCELED,
+    PARTIAL_CANCELED,
+    ABORTED,
+    EXPIRED;
+  }
 
-    public static class TossPaymentsFailure {
+  public static class TossPaymentsFailure {
 
-        private String code;
-        private String message;
-    }
+    private String code;
+    private String message;
+  }
 }

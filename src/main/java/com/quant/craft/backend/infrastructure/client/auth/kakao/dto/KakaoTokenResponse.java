@@ -12,5 +12,5 @@ import lombok.NoArgsConstructor;
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class KakaoTokenResponse {
 
-    private String accessToken;
+  private String accessToken;
 }

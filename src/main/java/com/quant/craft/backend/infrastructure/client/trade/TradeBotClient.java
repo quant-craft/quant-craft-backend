@@ -9,8 +9,8 @@ import org.springframework.web.client.RestClient;
 @Component
 public class TradeBotClient {
 
-    private final RestClient client;
+  private final RestClient client;
 
-    @Value("${application.host.trade}")
-    private String apiServerUrl;
+  @Value("${application.host.trade}")
+  private String apiServerUrl;
 }

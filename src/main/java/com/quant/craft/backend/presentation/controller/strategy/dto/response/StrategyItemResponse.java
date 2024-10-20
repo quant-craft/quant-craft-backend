@@ -11,23 +11,23 @@ import lombok.NoArgsConstructor;
 @Getter
 public class StrategyItemResponse {
 
-    private Long id;
+  private Long id;
 
-    private String name;
+  private String name;
 
-    private String description;
+  private String description;
 
-    private Long price;
+  private Long price;
 
-    private Strategy strategy;
+  private Strategy strategy;
 
-    public static StrategyItemResponse from(StrategyItem strategyItem) {
-        return new StrategyItemResponse(
-                strategyItem.getId(),
-                strategyItem.getName(),
-                strategyItem.getDescription(),
-                strategyItem.getPrice(),
-                strategyItem.getStrategy()
-        );
-    }
+  public static StrategyItemResponse from(StrategyItem strategyItem) {
+    return new StrategyItemResponse(
+        strategyItem.getId(),
+        strategyItem.getName(),
+        strategyItem.getDescription(),
+        strategyItem.getPrice(),
+        strategyItem.getStrategy()
+    );
+  }
 }

@@ -11,11 +11,11 @@ import lombok.Setter;
 @AllArgsConstructor
 public class StrategyItemPaginationRequest {
 
-    private String sortOption;
+  private String sortOption;
 
-    private String keyword;
+  private String keyword;
 
-    private Integer page = 1;
+  private Integer page = 1;
 
-    private Integer size = 10;
+  private Integer size = 10;
 }

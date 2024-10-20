@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class GoogleUserResponse {
 
-    private String id;
-    private String email;
-    private String name;
+  private String id;
+  private String email;
+  private String name;
 }

@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @Getter
 public class AuthorizationCodeRequest {
 
-    private String code;
-    private String redirectUri;
+  private String code;
+  private String redirectUri;
 }

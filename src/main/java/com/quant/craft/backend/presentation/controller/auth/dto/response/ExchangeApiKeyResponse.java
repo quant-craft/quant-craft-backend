@@ -2,7 +2,6 @@ package com.quant.craft.backend.presentation.controller.auth.dto.response;
 
 import com.quant.craft.backend.domain.auth.ExchangeApiKey;
 import com.quant.craft.backend.domain.auth.ExchangeType;
-import com.quant.craft.backend.domain.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

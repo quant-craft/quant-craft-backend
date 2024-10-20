@@ -7,22 +7,22 @@ import org.springframework.web.client.RestClient;
 @RequiredArgsConstructor
 public abstract class OAuthClient {
 
-    protected static final String BEARER_PREFIX = "Bearer ";
+  protected static final String BEARER_PREFIX = "Bearer ";
 
-    protected final RestClient client;
+  protected final RestClient client;
 
-    protected final String host;
+  protected final String host;
 
-    protected final String clientId;
+  protected final String clientId;
 
-    protected final String clientSecret;
+  protected final String clientSecret;
 
-    protected final String authServerUrl;
+  protected final String authServerUrl;
 
-    protected final String apiServerUrl;
+  protected final String apiServerUrl;
 
-    public abstract String generateAccessToken(String authorizationCode, String redirectUri);
+  public abstract String generateAccessToken(String authorizationCode, String redirectUri);
 
-    public abstract UserResponse getUserResponse(String accessToken);
+  public abstract UserResponse getUserResponse(String accessToken);
 
 }

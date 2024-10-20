@@ -9,12 +9,12 @@ import org.springframework.web.client.RestClient;
 @Configuration
 public class RestClientConfig {
 
-    @Bean
-    public RestClient restClient() {
-        SimpleClientHttpRequestFactory requestFactory = new SimpleClientHttpRequestFactory();
-        return RestClient.builder()
-                .requestFactory(new BufferingClientHttpRequestFactory(requestFactory))
-                .requestInterceptor(new LoggingInterceptor())
-                .build();
-    }
+  @Bean
+  public RestClient restClient() {
+    SimpleClientHttpRequestFactory requestFactory = new SimpleClientHttpRequestFactory();
+    return RestClient.builder()
+        .requestFactory(new BufferingClientHttpRequestFactory(requestFactory))
+        .requestInterceptor(new LoggingInterceptor())
+        .build();
+  }
 }

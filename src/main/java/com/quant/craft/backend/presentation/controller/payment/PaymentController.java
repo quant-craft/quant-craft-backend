@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/payment")
 public class PaymentController {
 
-    private final PaymentService service;
+  private final PaymentService service;
 
-    @GetMapping("/txns")
-    public ResponseEntity<PaymentTxnsResponse> viewPointTxns(@RequiredLogin User user) {
-        return ResponseEntity.ok(service.findPaymentTxns(user));
-    }
+  @GetMapping("/txns")
+  public ResponseEntity<PaymentTxnsResponse> viewPointTxns(@RequiredLogin User user) {
+    return ResponseEntity.ok(service.findPaymentTxns(user));
+  }
 }
