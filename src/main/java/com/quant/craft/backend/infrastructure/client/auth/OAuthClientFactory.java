@@ -10,13 +10,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class OAuthClientFactory {
 
-    private final KakaoOAuthClient kakaoClient;
-    private final GoogleOAuthClient googleClient;
+  private final KakaoOAuthClient kakaoClient;
+  private final GoogleOAuthClient googleClient;
 
-    public OAuthClient get(String provider) {
-        return switch (OAuthProvider.from(provider)) {
-            case KAKAO -> kakaoClient;
-            case GOOGLE -> googleClient;
-        };
-    }
+  public OAuthClient get(String provider) {
+    return switch (OAuthProvider.from(provider)) {
+      case KAKAO -> kakaoClient;
+      case GOOGLE -> googleClient;
+    };
+  }
 }

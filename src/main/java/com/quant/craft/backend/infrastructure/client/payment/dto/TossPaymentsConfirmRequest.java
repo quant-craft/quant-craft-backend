@@ -9,9 +9,9 @@ import lombok.NoArgsConstructor;
 @Getter
 public class TossPaymentsConfirmRequest {
 
-    private String paymentKey;
+  private String paymentKey;
 
-    private Long amount;
+  private Long amount;
 
-    private String orderId;
+  private String orderId;
 }

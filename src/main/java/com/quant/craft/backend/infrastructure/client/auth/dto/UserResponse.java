@@ -13,20 +13,20 @@ import lombok.NoArgsConstructor;
 @Getter
 public class UserResponse {
 
-    private String email;
+  private String email;
 
-    private String nickname;
+  private String nickname;
 
-    private String oauthId;
+  private String oauthId;
 
-    private OAuthProvider oauthProvider;
+  private OAuthProvider oauthProvider;
 
-    public User toEntity() {
-        return User.builder()
-                .email(email)
-                .nickname(nickname)
-                .oauthId(oauthId)
-                .oauthProvider(oauthProvider)
-                .build();
-    }
+  public User toEntity() {
+    return User.builder()
+        .email(email)
+        .nickname(nickname)
+        .oauthId(oauthId)
+        .oauthProvider(oauthProvider)
+        .build();
+  }
 }

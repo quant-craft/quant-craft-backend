@@ -9,9 +9,9 @@ import lombok.NoArgsConstructor;
 @Getter
 public class PointChargeRequest {
 
-    private String paymentKey;
+  private String paymentKey;
 
-    private Long amount;
+  private Long amount;
 
-    private String orderId;
+  private String orderId;
 }

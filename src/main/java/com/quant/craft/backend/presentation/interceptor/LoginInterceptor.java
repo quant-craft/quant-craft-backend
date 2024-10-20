@@ -12,24 +12,24 @@ import org.springframework.web.servlet.HandlerInterceptor;
 @Component
 public class LoginInterceptor implements HandlerInterceptor {
 
-    private final AuthService authService;
+  private final AuthService authService;
 
-    public LoginInterceptor(AuthService authService) {
-        this.authService = authService;
+  public LoginInterceptor(AuthService authService) {
+    this.authService = authService;
+  }
+
+  @Override
+  public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
+    if (HttpMethod.OPTIONS.matches(request.getMethod())) {
+      return true;
     }
 
-    @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-        if (HttpMethod.OPTIONS.matches(request.getMethod())) {
-            return true;
-        }
+    String accessToken = AuthorizationExtractor.extract(request);
 
-        String accessToken = AuthorizationExtractor.extract(request);
-
-        if (StringUtils.hasText(accessToken) && authService.findUserByAccessToken(accessToken).isPresent()) {
-            return true;
-        }
-
-        throw new UnauthorizedException("Invalid Access Token. access token: " + accessToken);
+    if (StringUtils.hasText(accessToken) && authService.findUserByAccessToken(accessToken).isPresent()) {
+      return true;
     }
+
+    throw new UnauthorizedException("Invalid Access Token. access token: " + accessToken);
+  }
 }

@@ -17,15 +17,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/users")
 public class UserController {
 
-    private final UserService userService;
+  private final UserService userService;
 
-    @GetMapping
-    public ResponseEntity<UserResponse> readUserProfile(@RequiredLogin User user) {
-        return ResponseEntity.ok(userService.findByUser(user.getId()));
-    }
+  @GetMapping
+  public ResponseEntity<UserResponse> readUserProfile(@RequiredLogin User user) {
+    return ResponseEntity.ok(userService.findByUser(user.getId()));
+  }
 
-    @GetMapping("/strategies")
-    public ResponseEntity<UserStrategyResponse> readUserStrategies(@RequiredLogin User user) {
-        return ResponseEntity.ok(userService.findUserStrategies(user.getId()));
-    }
+  @GetMapping("/strategies")
+  public ResponseEntity<UserStrategyResponse> readUserStrategies(@RequiredLogin User user) {
+    return ResponseEntity.ok(userService.findUserStrategies(user.getId()));
+  }
 }

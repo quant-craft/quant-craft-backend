@@ -12,5 +12,5 @@ import lombok.NoArgsConstructor;
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class GoogleTokenResponse {
 
-    private String accessToken;
+  private String accessToken;
 }
