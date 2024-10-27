@@ -1,6 +1,7 @@
 package com.quant.craft.backend.application.service;
 
 import com.quant.craft.backend.domain.trade.TradingBot;
+import com.quant.craft.backend.domain.user.User;
 import com.quant.craft.backend.exception.NotFoundException;
 import com.quant.craft.backend.infrastructure.client.trade.TradingBotClient;
 import com.quant.craft.backend.infrastructure.repository.TradingBotRepository;
@@ -20,13 +21,13 @@ public class TradingBotService {
 
     private final TradingBotRepository repository;
 
-    public TradingBotResponse createTradingBot(CreateTradingBotRequest request) {
+    public TradingBotResponse createTradingBot(User user, CreateTradingBotRequest request) {
         TradingBot tradingBot = client.create(
                 new com.quant.craft.backend.infrastructure.client.trade.dto.CreateTradingBotRequest(
                         request.getName(),
                         request.isDryRun(),
                         request.getCash(),
-                        request.getUserId(),
+                        user.getId(),
                         request.getExchangeApiKeyId(),
                         request.getStrategyId(),
                         request.getStatus()

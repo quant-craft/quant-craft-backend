@@ -17,8 +17,6 @@ public class CreateTradingBotRequest {
 
     private BigDecimal cash;
 
-    private Long userId;
-
     private Long exchangeApiKeyId;
 
     private Long strategyId;

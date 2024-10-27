@@ -1,6 +1,8 @@
 package com.quant.craft.backend.presentation.controller.trade;
 
 import com.quant.craft.backend.application.service.TradingBotService;
+import com.quant.craft.backend.domain.user.User;
+import com.quant.craft.backend.presentation.argumentresolver.RequiredLogin;
 import com.quant.craft.backend.presentation.controller.trade.dto.request.CreateTradingBotRequest;
 import com.quant.craft.backend.presentation.controller.trade.dto.response.TradingBotResponse;
 import lombok.RequiredArgsConstructor;
@@ -20,8 +22,11 @@ public class TradingBotController {
     }
 
     @PostMapping
-    public ResponseEntity<TradingBotResponse> create(@RequestBody CreateTradingBotRequest request) {
-        return ResponseEntity.ok(service.createTradingBot(request));
+    public ResponseEntity<TradingBotResponse> create(
+            @RequiredLogin User user,
+            @RequestBody CreateTradingBotRequest request
+    ) {
+        return ResponseEntity.ok(service.createTradingBot(user, request));
     }
 
     @DeleteMapping("/{tradingBotId}")
