@@ -10,7 +10,7 @@ import org.springframework.web.client.RestClient;
 
 @RequiredArgsConstructor
 @Component
-public class TradeBotClient {
+public class TradingBotClient {
 
   private final RestClient client;
 

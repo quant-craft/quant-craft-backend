@@ -31,7 +31,7 @@ public class ExchangeApiKeyController {
   }
 
   @GetMapping("/{exchangeApiKeyId}")
-  public ExchangeApiKeyResponse show(@RequiredLogin User user, Long exchangeApiKeyId) {
+  public ExchangeApiKeyResponse show(@RequiredLogin User user, @PathVariable Long exchangeApiKeyId) {
     return service.find(exchangeApiKeyId);
   }
 
