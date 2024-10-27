@@ -30,7 +30,7 @@ public class TradingBotService {
                         user.getId(),
                         request.getExchangeApiKeyId(),
                         request.getStrategyId(),
-                        request.getStatus()
+                        request.getStatus().getValue()
                 )
         );
         return TradingBotResponse.from(tradingBot);

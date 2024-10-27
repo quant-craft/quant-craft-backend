@@ -1,5 +1,6 @@
 package com.quant.craft.backend.presentation.controller.trade.dto.request;
 
+import com.quant.craft.backend.domain.trade.TradingBotStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,5 +22,5 @@ public class CreateTradingBotRequest {
 
     private Long strategyId;
 
-    private String status;
+    private TradingBotStatus status;
 }
