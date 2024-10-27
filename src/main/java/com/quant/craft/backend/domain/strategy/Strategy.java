@@ -32,9 +32,9 @@ public class Strategy extends BaseEntity {
 
   private float leverage;
 
-  private boolean exclusiveOrders;
+  private Boolean exclusiveOrders;
 
-  private boolean hedgeMode;
+  private Boolean hedgeMode;
 
   private String timeframe;
 
