@@ -14,6 +14,8 @@ import java.math.BigDecimal;
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class RunBackTestingRequest {
 
+    private Long userId;
+
     private String startDate;
 
     private String endDate;
