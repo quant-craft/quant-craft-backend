@@ -109,6 +109,29 @@ public class SseService {
         }
     }
 
+    public void broadcast(String topic, String message) {
+        for (Map.Entry<Long, SseEmitter> entry : emitters.entrySet()) {
+            Long botId = entry.getKey();
+            SseEmitter emitter = entry.getValue();
+
+            try {
+                emitter.send(SseEmitter.event()
+                        .id(String.valueOf(System.currentTimeMillis()))
+                        .name(topic)
+                        .data(message)
+                        .reconnectTime(3000));
+
+                log.debug("Broadcast market info to bot {}: topic={}, message={}",
+                        botId, topic, message);
+
+            } catch (IOException e) {
+                log.error("Failed to broadcast market info to bot {}: {}",
+                        botId, e.getMessage());
+                removeEmitter(botId);
+            }
+        }
+    }
+
     private void removeEmitter(Long botId) {
         SseEmitter emitter = emitters.remove(botId);
         if (emitter != null) {

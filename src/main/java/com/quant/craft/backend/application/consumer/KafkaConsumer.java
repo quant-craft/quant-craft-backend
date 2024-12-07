@@ -29,6 +29,8 @@ public class KafkaConsumer {
         try {
             log.info("Received market info - topic: {}, timestamp: {}, message: {}",
                     topic, Instant.ofEpochMilli(timestamp), message);
+
+            sseService.broadcast(topic, message);
         } catch (Exception e) {
             log.error("Error processing market info message: {}", e.getMessage(), e);
         }
