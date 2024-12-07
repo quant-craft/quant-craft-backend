@@ -23,15 +23,12 @@ public class KafkaConsumer {
     )
     public void consumeMarketInfo(
             String message,
-            @Header(KafkaHeaders.RECEIVED_KEY) long botId,
             @Header(KafkaHeaders.RECEIVED_TIMESTAMP) long timestamp,
             @Header(KafkaHeaders.RECEIVED_TOPIC) String topic
     ) {
         try {
-            log.info("Received market info - topic: {}, botId: {}, timestamp: {}, message: {}",
-                    topic, botId, Instant.ofEpochMilli(timestamp), message);
-
-            sseService.sendToBot(botId, topic, message);
+            log.info("Received market info - topic: {}, timestamp: {}, message: {}",
+                    topic, Instant.ofEpochMilli(timestamp), message);
         } catch (Exception e) {
             log.error("Error processing market info message: {}", e.getMessage(), e);
         }
@@ -43,7 +40,7 @@ public class KafkaConsumer {
     )
     public void consumeTradingEvents(
             String message,
-            @Header(KafkaHeaders.RECEIVED_KEY) long botId,
+            @Header(KafkaHeaders.RECEIVED_KEY) String botId,
             @Header(KafkaHeaders.RECEIVED_TIMESTAMP) long timestamp,
             @Header(KafkaHeaders.RECEIVED_TOPIC) String topic
     ) {
@@ -51,7 +48,7 @@ public class KafkaConsumer {
             log.info("Received trading event - topic: {}, botId: {}, timestamp: {}, message: {}",
                     topic, botId, Instant.ofEpochMilli(timestamp), message);
 
-            sseService.sendToBot(botId, topic, message);
+            sseService.sendToBot(Long.valueOf(botId), topic, message);
         } catch (Exception e) {
             log.error("Error processing trading event message: {}", e.getMessage(), e);
         }
