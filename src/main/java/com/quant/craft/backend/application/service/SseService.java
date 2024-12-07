@@ -4,55 +4,53 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 import java.io.IOException;
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 @Slf4j
 public class SseService {
 
-    private final List<SseEmitter> emitters = new CopyOnWriteArrayList<>();
+    private final Map<Long, SseEmitter> emitters = new ConcurrentHashMap<>();
 
-    public SseEmitter createEmitter() {
+    public SseEmitter createEmitter(Long botId) {
         SseEmitter emitter = new SseEmitter(Long.MAX_VALUE);
 
         emitter.onCompletion(() -> {
-            log.info("SSE connection completed");
-            removeEmitter(emitter);
+            log.info("SSE connection completed for bot: {}", botId);
+            removeEmitter(botId);
         });
 
         emitter.onTimeout(() -> {
-            log.info("SSE connection timeout");
-            removeEmitter(emitter);
+            log.info("SSE connection timeout for bot: {}", botId);
+            removeEmitter(botId);
         });
 
         emitter.onError(e -> {
-            log.error("SSE error: {}", e.getMessage());
-            removeEmitter(emitter);
+            log.error("SSE error for bot {}: {}", botId, e.getMessage());
+            removeEmitter(botId);
         });
 
-        emitters.add(emitter);
+        emitters.put(botId, emitter);
         return emitter;
     }
 
-    public void broadcast(String topic, String message) {
-        List<SseEmitter> deadEmitters = new CopyOnWriteArrayList<>();
 
-        emitters.forEach(emitter -> {
+    public void sendToBot(Long botId, String topic, String message) {
+        SseEmitter emitter = emitters.get(botId);
+        if (emitter != null) {
             try {
                 emitter.send(SseEmitter.event()
                         .name(topic)
                         .data(message));
             } catch (IOException e) {
-                log.error("Error sending SSE: {}", e.getMessage());
-                deadEmitters.add(emitter);
+                log.error("Error sending SSE to bot {}: {}", botId, e.getMessage());
+                removeEmitter(botId);
             }
-        });
-
-        emitters.removeAll(deadEmitters);
+        }
     }
 
-    private void removeEmitter(SseEmitter emitter) {
-        emitters.remove(emitter);
+    private void removeEmitter(Long botId) {
+        emitters.remove(botId);
     }
 }
